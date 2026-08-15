@@ -20,7 +20,7 @@
    2. NAVIGATION BAR CONTAINER
    ========================================= */
 .nav-bar {
-    -fx-background-color: #03045E;
+    -fx-background-color: #000666; /* Updated to your exact navy shade */
     -fx-padding: 12 30 12 30;
     -fx-spacing: 20;
     -fx-alignment: center-left;
