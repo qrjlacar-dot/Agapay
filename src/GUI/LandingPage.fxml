@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LandingPageController">
+
+    <!-- TOP: Navigation Bar -->
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+
+    <!-- CENTER: Main Landing Content wrapped in a ScrollPane -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="landing-scroll-pane" BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="25" styleClass="landing-content-vbox">
+                    <padding>
+                        <Insets bottom="40" left="60" right="20" top="12" />
+                    </padding>
+
+                    <!-- EXTREME RIGHT IN THE WHITE SPACE -->
+                    <HBox alignment="TOP_RIGHT" styleClass="logout-container-row">
+                        <Button fx:id="logoutButton" styleClass="logout-btn" text="Log Out" />
+                    </HBox>
+
+                    <!-- Header Logo & Tagline -->
+                    <HBox alignment="CENTER" spacing="15">
+                        <ImageView fitHeight="65" fitWidth="65" preserveRatio="true">
+                            <image>
+                                <Image url="@../Assets/Icons/Logo.png" />
+                            </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT" spacing="0">
+                            <Label styleClass="landing-brand-title" text="AGAPAY" />
+                            <Label styleClass="landing-brand-subtitle" text="Find work that works for you." />
+                        </VBox>
+                    </HBox>
+
+                    <!-- Search Bar Section -->
+                    <VBox alignment="CENTER" maxWidth="750" spacing="10">
+                        <HBox alignment="CENTER_LEFT" styleClass="search-bar-container">
+                            <padding>
+                                <Insets bottom="8" left="15" right="8" top="8" />
+                            </padding>
+                            <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                                <image>
+                                    <Image url="@../Assets/Icons/search.png" />
+                                </image>
+                            </ImageView>
+                            <TextField fx:id="searchField" promptText="Search for a job or volunteer work" HBox.hgrow="ALWAYS" styleClass="search-text-field" />
+                            <Button styleClass="search-submit-btn" text="Search" />
+                        </HBox>
+
+                        <HBox alignment="CENTER" spacing="10">
+                            <Region styleClass="divider-line" HBox.hgrow="ALWAYS" />
+                            <Label styleClass="or-label" text="or" />
+                            <Region styleClass="divider-line" HBox.hgrow="ALWAYS" />
+                        </HBox>
+
+                        <!-- Big Matching Action Button -->
+                        <Button maxWidth="Infinity" styleClass="match-job-btn" text="🔍 Find a Job Matched for You" />
+                    </VBox>
+
+                    <!-- Recommended Section Header -->
+                    <HBox alignment="CENTER_LEFT" maxWidth="1100" spacing="15" styleClass="section-header-box">
+                        <Label styleClass="section-title" text="Recommended for You" />
+                        <Region styleClass="section-header-divider" HBox.hgrow="ALWAYS" />
+                        <Hyperlink fx:id="viewAllLink" styleClass="view-all-link" text="View All" />
+                    </HBox>
+
+                    <!-- Job Cards Container -->
+                    <HBox alignment="CENTER" spacing="30" styleClass="cards-container">
+
+                        <!-- CARD 1 -->
+                        <VBox styleClass="job-card">
+                            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-badge-container">
+                                <ImageView fitHeight="14" fitWidth="14" preserveRatio="true">
+                                    <image><Image url="@../Assets/Icons/wheelchair.png" /></image>
+                                </ImageView>
+                                <Label styleClass="badge-yellow-text" text="Accessible Facility" />
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-title-row">
+                                <Label styleClass="card-job-title" text="Church Helper" />
+                                <Label styleClass="badge-green-pill" text="Volunteer Work" />
+                            </HBox>
+
+                            <Label styleClass="card-location" text="Saint Joseph Parish • Tandang Sora QC" />
+
+                            <Region prefHeight="10" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/pesosign.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="₱ 600 Allowance per day" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/clock.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="8 am - 4pm | 7 days only" />
+                            </HBox>
+
+                            <Region prefHeight="10" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-info-row">
+                                <ImageView fitHeight="14" fitWidth="14" preserveRatio="true"><image><Image url="@../Assets/Icons/seniorsign.png" /></image></ImageView>
+                                <Label styleClass="card-footer-sub" text="Seniors welcome" />
+                            </HBox>
+
+                            <Region VBox.vgrow="ALWAYS" />
+                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                        </VBox>
+
+                        <!-- CARD 2 -->
+                        <VBox styleClass="job-card">
+                            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-badge-container-remote">
+                                <ImageView fitHeight="14" fitWidth="14" preserveRatio="true">
+                                    <image><Image url="@../Assets/Icons/house.png" /></image>
+                                </ImageView>
+                                <Label styleClass="badge-yellow-text" text="100% Remote" />
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-title-row">
+                                <Label styleClass="card-job-title" text="Research Assistant" />
+                            </HBox>
+
+                            <Label styleClass="card-location" text="Hawkins Lab • Cubao QC" />
+
+                            <Region prefHeight="10" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/pesosign.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="₱ 21,000" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/clock.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="8 am - 4pm | Full Time" />
+                            </HBox>
+
+                            <Region prefHeight="26" />
+
+                            <Region VBox.vgrow="ALWAYS" />
+                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                        </VBox>
+
+                        <!-- CARD 3 -->
+                        <VBox styleClass="job-card">
+                            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-badge-container">
+                                <ImageView fitHeight="14" fitWidth="14" preserveRatio="true">
+                                    <image><Image url="@../Assets/Icons/wheelchair.png" /></image>
+                                </ImageView>
+                                <Label styleClass="badge-yellow-text" text="Accessible Facility" />
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-title-row">
+                                <Label styleClass="card-job-title" text="Charity Helper" />
+                                <Label styleClass="badge-green-pill" text="Volunteer Work" />
+                            </HBox>
+
+                            <Label styleClass="card-location" text="Saint Joseph Parish • Tandang Sora QC" />
+
+                            <Region prefHeight="10" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/pesosign.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="₱ 300 Allowance per day" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
+                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/clock.png" /></image></ImageView>
+                                <Label styleClass="card-info-text" text="8 am - 4pm | 3 days only" />
+                            </HBox>
+
+                            <Region prefHeight="10" />
+
+                            <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-info-row">
+                                <ImageView fitHeight="14" fitWidth="14" preserveRatio="true"><image><Image url="@../Assets/Icons/seniorsign.png" /></image></ImageView>
+                                <Label styleClass="card-footer-sub" text="Seniors welcome" />
+                            </HBox>
+
+                            <Region VBox.vgrow="ALWAYS" />
+                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                        </VBox>
+
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
