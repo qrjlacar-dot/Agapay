@@ -1,90 +1,88 @@
-/* =========================================
-   1. LOAD THE FONTS
-   ========================================= */
+/* Loads the ExtraBold variant of the Atkinson Hyperlegible Next font */
 @font-face {
     font-family: 'Atkinson Hyperlegible Next ExtraBold';
     src: url('Fonts/AtkinsonHyperlegibleNext-ExtraBold.ttf');
 }
 
+/* Loads the SemiBold variant of the Atkinson Hyperlegible Next font */
 @font-face {
     font-family: 'Atkinson Hyperlegible Next SemiBold';
     src: url('Fonts/AtkinsonHyperlegibleNext-SemiBold.ttf');
 }
 
+/* Loads the Bold variant of the Atkinson Hyperlegible Next font */
 @font-face {
     font-family: 'Atkinson Hyperlegible Next Bold';
     src: url('Fonts/AtkinsonHyperlegibleNext-Bold.ttf');
 }
 
-/* =========================================
-   2. NAVIGATION BAR CONTAINER
-   ========================================= */
+/* Sets the background color, padding, spacing, and alignment for the main navigation bar */
 .nav-bar {
-    -fx-background-color: #000666; /* Updated to your exact navy shade */
+    -fx-background-color: #000666;
     -fx-padding: 12 30 12 30;
     -fx-spacing: 20;
     -fx-alignment: center-left;
 }
 
-/* =========================================
-   3. TEXT STYLES (LABELS)
-   ========================================= */
+/* Formats the large main title text in the navigation bar */
 .nav-title {
-    -fx-font-family: 'Atkinson Hyperlegible Next ExtraBold';
+    -fx-font-family: 'Atkinson Hyperlegible Next ExtraBold', 'Arial Black', sans-serif;
+    -fx-font-weight: bold;
     -fx-font-size: 28px;
     -fx-text-fill: white;
 }
 
+/* Styles the standard text labels used within the navigation bar */
 .nav-label {
-    -fx-font-family: 'Atkinson Hyperlegible Next SemiBold';
+    -fx-font-family: 'Atkinson Hyperlegible Next SemiBold', 'Segoe UI', sans-serif;
+    -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-text-fill: white;
 }
 
-/* =========================================
-   4. SEGMENTED PILL CONTAINER & BUTTONS
-   ========================================= */
-/* The rounded container holding A-, A, A+ */
+/* Styles the semi-transparent rounded pill-shaped background container */
 .size-pill-container {
-    -fx-background-color: rgba(255, 255, 255, 0.35); /* Translucent pill background */
+    -fx-background-color: rgba(255, 255, 255, 0.35);
     -fx-background-radius: 25px;
     -fx-padding: 2 10 2 10;
     -fx-alignment: center;
 }
 
-/* Base style for A-, A, A+ buttons inside the pill */
+/* Formats the individual clickable transparent buttons inside the pill container */
 .pill-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-font-family: 'Atkinson Hyperlegible Next Bold';
+    -fx-font-family: 'Atkinson Hyperlegible Next Bold', 'Segoe UI', sans-serif;
+    -fx-font-weight: bold;
     -fx-font-size: 18px;
     -fx-cursor: hand;
     -fx-padding: 6 18 6 18;
 }
 
-/* Vertical dividers between A- | A | A+ */
+/* Adds a semi-transparent right border to separate adjacent pill buttons */
 .pill-button-bordered {
     -fx-border-color: rgba(255, 255, 255, 0.4);
-    -fx-border-width: 0 1px 0 0; /* Right vertical line */
+    -fx-border-width: 0 1px 0 0;
 }
 
+/* Adds a rounded semi-transparent white background effect when hovering over a pill button */
 .pill-button:hover {
     -fx-background-color: rgba(255, 255, 255, 0.2);
     -fx-background-radius: 15px;
 }
 
-/* =========================================
-   5. DEFAULT BUTTON
-   ========================================= */
+/* Styles the standard transparent navigation buttons outside the pill container */
 .nav-button-default {
     -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-font-family: 'Atkinson Hyperlegible Next SemiBold';
+    -fx-font-family: 'Atkinson Hyperlegible Next SemiBold', 'Segoe UI', sans-serif;
+    -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-cursor: hand;
     -fx-padding: 6 12 6 12;
 }
 
+/* Adds a subtle rounded semi-transparent hover effect to the default navigation buttons */
 .nav-button-default:hover {
     -fx-background-color: rgba(255, 255, 255, 0.2);
     -fx-background-radius: 5px;

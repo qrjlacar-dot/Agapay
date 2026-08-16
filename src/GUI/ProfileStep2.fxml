@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:controller="GUI.ProfileStep2Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-bg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- External CSS stylesheets for UI styling -->
+    <stylesheets>
+        <URL value="@../Assets/style.css" />
+        <URL value="@../Assets/profile.css" />
+    </stylesheets>
+
+    <!-- Top navigation bar -->
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+
+    <!-- Main centered content area -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+
+                <!-- Navigation button to return to the homepage -->
+                <HBox maxWidth="1080.0">
+                    <children>
+                        <Button mnemonicParsing="false" styleClass="back-btn" text="Back to Homepage">
+                            <graphic>
+                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../Assets/Icons/arrow-left.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <!-- Centered wrapper for the main profile card -->
+                <StackPane alignment="TOP_CENTER" maxWidth="1080.0">
+                    <children>
+
+                        <!-- The main profile creation card -->
+                        <VBox spacing="20.0" styleClass="profile-card">
+                            <children>
+
+                                <!-- Step indicator badge (Step 2 of 2) -->
+                                <HBox alignment="CENTER_LEFT">
+                                    <children>
+                                        <Label styleClass="step-badge" text="Step 2 of 2" />
+                                    </children>
+                                </HBox>
+
+                                <!-- Header title and description with decorative lines -->
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                            <children>
+                                                <Label styleClass="section-header-title" text="Accessibility Needs" />
+                                                <Region styleClass="header-line" HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+
+                                        <Label styleClass="section-subtitle" text="Select the accommodations that will help you work comfortably." />
+
+                                        <Region styleClass="header-line" />
+                                    </children>
+                                </VBox>
+
+                                <!-- Grid layout for workplace accommodation toggle buttons -->
+                                <VBox spacing="15.0">
+                                    <VBox.margin>
+                                        <Insets top="20.0" />
+                                    </VBox.margin>
+                                    <children>
+                                        <Label styleClass="group-title" text="Workplace Accommodations" />
+
+                                        <GridPane hgap="15.0" vgap="12.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints percentWidth="25.0" />
+                                                <ColumnConstraints percentWidth="25.0" />
+                                                <ColumnConstraints percentWidth="25.0" />
+                                                <ColumnConstraints percentWidth="25.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints vgrow="ALWAYS" />
+                                                <RowConstraints vgrow="ALWAYS" />
+                                            </rowConstraints>
+                                            <children>
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Wheelchair Accessible&#10;Workplace" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Accessible Restrooms" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Screen Reader&#10;Compatibility" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Sign Language&#10;Interpreter" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Flexible Working Hours" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Remote Work Option" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Quiet Work Environment" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="50.0" styleClass="option-toggle" text="Assistive Devices&#10;Allowed" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </VBox>
+
+                                <!-- Text input field for specifying custom accommodations -->
+                                <VBox spacing="8.0">
+                                    <children>
+                                        <Label styleClass="other-label" text="Other (Specify)" />
+                                        <TextField promptText="Please describe any other accommodations you may need..." styleClass="form-input" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </VBox>
+
+                                <!-- Bottom navigation buttons to go back or finish profile -->
+                                <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" styleClass="back-step-btn" text="Back">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../Assets/Icons/back-icon.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+
+                                        <Button contentDisplay="RIGHT" mnemonicParsing="false" styleClass="complete-profile-btn" text="Complete Profile">
+                                            <graphic>
+                                                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../Assets/Icons/check-circle.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="15.0" />
+                                    </VBox.margin>
+                                </HBox>
+
+                            </children>
+                            <padding>
+                                <Insets bottom="35.0" left="45.0" right="45.0" top="45.0" />
+                            </padding>
+                            <StackPane.margin>
+                                <Insets top="22.0" />
+                            </StackPane.margin>
+                        </VBox>
+
+                        <!-- Floating title banner resting at the top center of the card -->
+                        <Label styleClass="top-banner-title" text="Complete Your Profile" StackPane.alignment="TOP_CENTER" />
+
+                    </children>
+                </StackPane>
+            </children>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
