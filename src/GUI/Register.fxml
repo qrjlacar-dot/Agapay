@@ -84,6 +84,14 @@
                                             </children>
                                         </VBox>
 
+                                        <!-- Government ID input field -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Government ID (For PWD and Elderly)" />
+                                                <TextField promptText="Enter Government ID (PWD ID, Senior Citizen ID)..." styleClass="form-input" />
+                                            </children>
+                                        </VBox>
+
                                         <!-- Password input with visibility toggle -->
                                         <VBox spacing="6.0">
                                             <children>
