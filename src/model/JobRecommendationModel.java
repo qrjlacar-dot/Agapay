@@ -1,5 +1,5 @@
 package model;
 
-public record JobRecommendation {
+public class JobRecommendationModel {
     
 }
