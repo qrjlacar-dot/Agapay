@@ -1,0 +1,154 @@
+/* Root & Background setup */
+.root-pane {
+    -fx-background-color: #FAF8F4;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.landing-scroll-pane {
+    -fx-background: #FAF8F4;
+    -fx-background-color: #FAF8F4;
+    -fx-border-color: transparent;
+}
+
+.landing-content-vbox {
+    -fx-background-color: #FAF8F4;
+    -fx-spacing: 30px;
+}
+
+/* Header Section */
+.section-header-box {
+    -fx-padding: 0 0 10px 0;
+}
+
+.section-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000666;
+}
+
+.section-header-divider {
+    -fx-border-color: #E2DBD0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-max-height: 1px;
+    -fx-pref-height: 1px;
+}
+
+/* Back Arrow Button */
+.back-arrow-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000666;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 0 5px 5px 0;
+}
+
+.back-arrow-btn:hover {
+    -fx-opacity: 0.7;
+}
+
+/* Cards Grid Row Container */
+.cards-container {
+    -fx-padding: 5px 0;
+    -fx-spacing: 40px;
+    -fx-alignment: CENTER;
+}
+
+/* Individual Job Card Styling - Dimensions: W: 304, H: 394 with drop shadow */
+.job-card {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000666;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+    -fx-pref-width: 304px;
+    -fx-min-width: 304px;
+    -fx-max-width: 304px;
+    -fx-pref-height: 394px;
+    -fx-min-height: 394px;
+    -fx-max-height: 394px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,6,102,0.15), 14, 0, 0, 4);
+}
+
+/* Yellow Badge Component: Tightly wraps text length */
+.card-badge-label {
+    -fx-background-color: #F3AD34;
+    -fx-text-fill: #000666;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 4px 10px;
+    -fx-graphic-text-gap: 6px;
+}
+
+/* Green Volunteer Pill */
+.badge-green-pill {
+    -fx-background-color: #83DF71;
+    -fx-text-fill: #000666;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-padding: 2px 8px;
+}
+
+/* Typography Inside Cards */
+.card-title-row {
+    -fx-padding: 6px 0 2px 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 8px;
+}
+
+.card-job-title {
+    -fx-font-size: 19px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000666;
+    -fx-wrap-text: true;
+}
+
+.card-location {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555555;
+    -fx-padding: 0 0 10px 0;
+    -fx-wrap-text: true;
+}
+
+/* Perfectly centered info rows vertically within the card's middle gap */
+.card-info-row {
+    -fx-padding: 8px 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 10px;
+}
+
+.card-info-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #222222;
+    -fx-font-weight: normal;
+}
+
+.card-footer-sub {
+    -fx-font-size: 13px;
+    -fx-text-fill: #222222;
+    -fx-font-weight: normal;
+}
+
+/* Action Button ("View & Apply") with width 271, height 56, and drop shadow */
+.card-action-btn {
+    -fx-background-color: #000666;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 271px;
+    -fx-min-width: 271px;
+    -fx-max-width: 271px;
+    -fx-pref-height: 56px;
+    -fx-min-height: 56px;
+    -fx-max-height: 56px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 8, 0, 0, 3);
+}
+
+.card-action-btn:hover {
+    -fx-background-color: #121A88;
+}
