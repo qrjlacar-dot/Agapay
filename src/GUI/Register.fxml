@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:controller="GUI.RegisterController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-bg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Attach external stylesheets for UI styling -->
+    <stylesheets>
+        <URL value="@../Assets/style.css" />
+        <URL value="@../Assets/login.css" />
+    </stylesheets>
+
+    <!-- Top navigation bar -->
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+
+    <!-- Centered registration form container -->
+    <center>
+        <StackPane BorderPane.alignment="CENTER">
+            <children>
+                <!-- Main registration card wrapper -->
+                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="820.0" styleClass="login-card">
+                    <children>
+
+                        <!-- Card header with title and subtitle -->
+                        <VBox styleClass="card-header">
+                            <children>
+                                <Label styleClass="header-title" text="Let's Get Started!" />
+                                <Label styleClass="header-subtitle" text="Create your AGAPAY account today." />
+                            </children>
+                        </VBox>
+
+                        <!-- Tab buttons to toggle between Log In and Register -->
+                        <HBox prefHeight="55.0" styleClass="tab-container">
+                            <children>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="55.0" styleClass="tab-inactive" text="Log In" HBox.hgrow="ALWAYS" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="55.0" styleClass="tab-active" text="Register" HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+
+                        <!-- Two-column layout for form fields and file upload -->
+                        <GridPane hgap="35.0">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50.0" />
+                                <ColumnConstraints percentWidth="50.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS" />
+                            </rowConstraints>
+                            <children>
+
+                                <!-- Left column: User details input fields -->
+                                <VBox spacing="18.0" GridPane.columnIndex="0">
+                                    <children>
+
+                                        <!-- Full name input field -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Full Name" />
+                                                <TextField promptText="Enter your complete legal name..." styleClass="form-input" />
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Email address input field -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Email Address" />
+                                                <TextField promptText="Enter email address..." styleClass="form-input" />
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Government ID input field -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Government ID (For PWD and Elderly)" />
+                                                <TextField promptText="Enter Government ID (PWD ID, Senior Citizen ID)..." styleClass="form-input" />
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Password input with visibility toggle -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Password" />
+                                                <StackPane styleClass="password-container">
+                                                    <children>
+                                                        <PasswordField fx:id="passwordField" promptText="Enter password..." styleClass="form-input" />
+                                                        <TextField fx:id="passwordTextField" managed="false" promptText="Enter password..." styleClass="form-input" visible="false" />
+                                                        <Button fx:id="togglePasswordBtn" focusTraversable="false" mnemonicParsing="false" onAction="#togglePasswordVisibility" styleClass="eye-icon-btn" StackPane.alignment="CENTER_RIGHT">
+                                                            <graphic>
+                                                                <ImageView fx:id="eyeIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../Assets/Icons/eye-closed.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </graphic>
+                                                        </Button>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Confirm password input with visibility toggle -->
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Confirm Password" />
+                                                <StackPane styleClass="password-container">
+                                                    <children>
+                                                        <PasswordField fx:id="confirmPasswordField" promptText="Confirm password..." styleClass="form-input" />
+                                                        <TextField fx:id="confirmPasswordTextField" managed="false" promptText="Confirm password..." styleClass="form-input" visible="false" />
+                                                        <Button fx:id="toggleConfirmPasswordBtn" focusTraversable="false" mnemonicParsing="false" onAction="#toggleConfirmPasswordVisibility" styleClass="eye-icon-btn" StackPane.alignment="CENTER_RIGHT">
+                                                            <graphic>
+                                                                <ImageView fx:id="confirmEyeIcon" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../Assets/Icons/eye-closed.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </graphic>
+                                                        </Button>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+
+                                <!-- Right column: Resume upload and submit button -->
+                                <VBox spacing="18.0" GridPane.columnIndex="1">
+                                    <children>
+
+                                        <!-- Upload resume section label -->
+                                        <Label style="-fx-font-weight: bold;" styleClass="form-label" text="Upload Resume (Optional)" />
+
+                                        <!-- Drag and drop area for resume file upload -->
+                                        <VBox alignment="CENTER" prefHeight="235.0" spacing="14.0" styleClass="drag-drop-box" VBox.vgrow="ALWAYS">
+                                            <children>
+                                                <!-- File Icon -->
+                                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../Assets/Icons/file-add.png" />
+                                                    </image>
+                                                </ImageView>
+
+                                                <!-- Drag and Drop Text -->
+                                                <Label style="-fx-font-weight: 500;" styleClass="drop-text" text="Drag and drop your file here, or" />
+
+                                                <!-- Choose File Button -->
+                                                <Button mnemonicParsing="false" style="-fx-font-weight: 600;" styleClass="choose-file-btn" text="Choose File" />
+
+                                                <!-- Supported Formats Text -->
+                                                <Label style="-fx-font-weight: normal; -fx-text-fill: #777777; -fx-font-size: 11px;" text="Supported formats: PDF, DOC, DOCX (Max 5MB)" />
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Primary registration submit button -->
+                                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="55.0" styleClass="primary-btn" text="Register Account">
+                                            <VBox.margin>
+                                                <Insets top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                    </children>
+                                </VBox>
+
+                            </children>
+
+                            <padding>
+                                <Insets bottom="38.0" left="36.0" right="36.0" top="30.0" />
+                            </padding>
+                        </GridPane>
+
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

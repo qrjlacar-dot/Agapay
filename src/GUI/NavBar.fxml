@@ -20,7 +20,7 @@
         <Region HBox.hgrow="ALWAYS" />
         <Label styleClass="nav-label" text="TEXT SIZE:" />
 
-        <!-- Rounded Pill Group -->
+        <!-- Rounded Pill Container -->
         <HBox styleClass="size-pill-container">
             <children>
                 <Button mnemonicParsing="false" text="A-">
@@ -41,7 +41,4 @@
 
         <Button mnemonicParsing="false" styleClass="nav-button-default" text="DEFAULT" />
     </children>
-    <padding>
-        <Insets bottom="12.0" left="30.0" right="30.0" top="12.0" />
-    </padding>
 </HBox>

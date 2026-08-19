@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:controller="GUI.ProfileStep1Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="main-bg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Attach external stylesheets for UI styling -->
+    <stylesheets>
+        <URL value="@../Assets/style.css" />
+        <URL value="@../Assets/profile.css" />
+    </stylesheets>
+
+    <!-- Top navigation bar -->
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+
+    <!-- Main content area -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+
+                <!-- Back to homepage navigation button -->
+                <HBox maxWidth="1080.0">
+                    <children>
+                        <Button mnemonicParsing="false" styleClass="back-btn" text="Back to Homepage">
+                            <graphic>
+                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../Assets/Icons/arrow-left.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <!-- Centered container for the main profile card -->
+                <StackPane alignment="TOP_CENTER" maxWidth="1080.0">
+                    <children>
+
+                        <!-- Main profile creation card -->
+                        <VBox spacing="20.0" styleClass="profile-card">
+                            <children>
+
+                                <!-- Step indicator badge (Step 1 of 2) -->
+                                <HBox alignment="CENTER_LEFT">
+                                    <children>
+                                        <Label styleClass="step-badge" text="Step 1 of 2" />
+                                    </children>
+                                </HBox>
+
+                                <!-- Header title and description for this step -->
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                            <children>
+                                                <Label styleClass="section-header-title" text="Employment Preferences" />
+                                                <Region styleClass="header-line" HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+
+                                        <Label styleClass="section-subtitle" text="Tell us what kind of job you're looking for to help us find the best matches for you." />
+
+                                        <Region styleClass="header-line" />
+                                    </children>
+                                </VBox>
+
+                                <!-- Two-column layout for the form options -->
+                                <HBox spacing="30.0">
+                                    <VBox.margin>
+                                        <Insets top="20.0" />
+                                    </VBox.margin>
+                                    <children>
+
+                                        <!-- Left column: Job category selection grid -->
+                                        <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="group-title" text="Preferred Job Category" />
+                                                <Label styleClass="group-subtitle" text="Select the category that best fits your preference." />
+
+                                                <GridPane hgap="12.0" vgap="12.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints percentWidth="50.0" />
+                                                        <ColumnConstraints percentWidth="50.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints vgrow="ALWAYS" />
+                                                        <RowConstraints vgrow="ALWAYS" />
+                                                        <RowConstraints vgrow="ALWAYS" />
+                                                        <RowConstraints vgrow="ALWAYS" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Office &amp; Admin" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Customer Service" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Sales &amp; Retail" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="IT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Healthcare" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Education" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Remote Work" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                                        <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Others" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Right column: Work setup, employment type, and location -->
+                                        <VBox spacing="18.0" HBox.hgrow="ALWAYS">
+                                            <children>
+
+                                                <!-- Work setup preference toggles (On-site, Hybrid, Remote) -->
+                                                <VBox spacing="8.0">
+                                                    <children>
+                                                        <Label styleClass="group-title" text="Work Setup" />
+                                                        <HBox spacing="12.0">
+                                                            <children>
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="On-site" HBox.hgrow="ALWAYS" />
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Hybrid" HBox.hgrow="ALWAYS" />
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Remote" HBox.hgrow="ALWAYS" />
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+
+                                                <!-- Employment type preference toggles (Full-time, Part-time, Contract) -->
+                                                <VBox spacing="8.0">
+                                                    <children>
+                                                        <Label styleClass="group-title" text="Employment Type" />
+                                                        <HBox spacing="12.0">
+                                                            <children>
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Full-time" HBox.hgrow="ALWAYS" />
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Part-time" HBox.hgrow="ALWAYS" />
+                                                                <ToggleButton maxWidth="1.7976931348623157E308" prefHeight="45.0" styleClass="option-toggle" text="Contract" HBox.hgrow="ALWAYS" />
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+
+                                                <!-- Dynamic spacer to push the location input to the bottom -->
+                                                <Region VBox.vgrow="ALWAYS" />
+
+                                                <!-- Preferred work location input field with map pin icon -->
+                                                <VBox spacing="8.0">
+                                                    <children>
+                                                        <Label styleClass="group-title" text="Preferred Work Location" />
+                                                        <HBox alignment="CENTER_LEFT" styleClass="location-input-container">
+                                                            <children>
+                                                                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../Assets/Icons/map-pin.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                                <TextField promptText="Enter your work location..." styleClass="location-input-field" HBox.hgrow="ALWAYS" />
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+
+                                            </children>
+                                        </VBox>
+
+                                    </children>
+                                </HBox>
+
+                                <!-- Bottom action buttons (Cancel and Next Step) -->
+                                <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" styleClass="cancel-btn" text="Cancel" />
+                                        <Button contentDisplay="RIGHT" mnemonicParsing="false" styleClass="next-step-btn" text="Next Step →" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="15.0" />
+                                    </VBox.margin>
+                                </HBox>
+
+                            </children>
+                            <padding>
+                                <Insets bottom="35.0" left="45.0" right="45.0" top="45.0" />
+                            </padding>
+                            <StackPane.margin>
+                                <Insets top="22.0" />
+                            </StackPane.margin>
+                        </VBox>
+
+                        <!-- Floating title banner at the top of the card -->
+                        <Label styleClass="top-banner-title" text="Complete Your Profile" StackPane.alignment="TOP_CENTER" />
+
+                    </children>
+                </StackPane>
+            </children>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
