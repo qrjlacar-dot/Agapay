@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../viewall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAllController">
+<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../Assets/viewall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAllController">
 
     <!-- TOP: Navigation Bar -->
     <top>
@@ -22,15 +22,16 @@
     <center>
         <ScrollPane fitToWidth="true" styleClass="landing-scroll-pane" BorderPane.alignment="CENTER">
             <content>
-                <VBox alignment="TOP_CENTER" spacing="25" styleClass="landing-content-vbox">
+                <VBox fx:id="jobsContainer" alignment="TOP_CENTER" spacing="25" styleClass="landing-content-vbox">
                     <padding>
                         <Insets bottom="40" left="60" right="60" top="20" />
                     </padding>
 
                     <!-- Page Header Section with Back Arrow & Divider -->
                     <HBox alignment="CENTER_LEFT" maxWidth="1150" spacing="15" styleClass="section-header-box">
-                        <Button fx:id="backButton" styleClass="back-arrow-btn" text="‹" />
-                        <Label styleClass="section-title" text="Recommended for You" />
+                        
+                        <Button fx:id="backButton" onAction="#goBack" styleClass="back-arrow-btn" text="‹" />
+                        <Label styleClass="section-title" text="All Jobs for You" />
                         <Region styleClass="section-header-divider" HBox.hgrow="ALWAYS" />
                     </HBox>
 
@@ -65,7 +66,7 @@
                                 <Label styleClass="card-footer-sub" text="Seniors welcome" />
                             </HBox>
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 2: Research Assistant -->
@@ -92,7 +93,7 @@
                             </HBox>
                             <Region prefHeight="26" />
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 3: Charity Helper -->
@@ -124,7 +125,7 @@
                                 <Label styleClass="card-footer-sub" text="Seniors welcome" />
                             </HBox>
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
                     </HBox>
 
@@ -155,7 +156,7 @@
                             </HBox>
                             <Region prefHeight="26" />
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 5: Assistive Technology Engineer -->
@@ -182,7 +183,7 @@
                             </HBox>
                             <Region prefHeight="26" />
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 6: Support Counselor -->
@@ -209,10 +210,9 @@
                             </HBox>
                             <Region prefHeight="26" />
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
                     </HBox>
-
                 </VBox>
             </content>
         </ScrollPane>

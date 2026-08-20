@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LandingPageController">
+<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../Assets/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LandingPageController">
 
     <!-- TOP: Navigation Bar -->
     <top>
@@ -31,7 +31,8 @@
 
                     <!-- EXTREME RIGHT IN THE WHITE SPACE -->
                     <HBox alignment="TOP_RIGHT" styleClass="logout-container-row">
-                        <Button fx:id="logoutButton" styleClass="logout-btn" text="Log Out" />
+            
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" styleClass="logout-btn" text="Log Out" />
                     </HBox>
 
                     <!-- Header Logo & Tagline -->
@@ -59,7 +60,7 @@
                                 </image>
                             </ImageView>
                             <TextField fx:id="searchField" promptText="Search for a job or volunteer work" HBox.hgrow="ALWAYS" styleClass="search-text-field" />
-                            <Button styleClass="search-submit-btn" text="Search" />
+                            <Button onAction="#handleSearch" styleClass="search-submit-btn" text="Search" />
                         </HBox>
 
                         <HBox alignment="CENTER" spacing="10">
@@ -69,20 +70,20 @@
                         </HBox>
 
                         <!-- Big Matching Action Button -->
-                        <Button maxWidth="Infinity" styleClass="match-job-btn" text="🔍 Find a Job Matched for You" />
+                        <Button maxWidth="Infinity" onAction="#handleFindMatchedJobs" styleClass="match-job-btn" text="🔍 Find a Job Matched for You" />
                     </VBox>
 
                     <!-- Recommended Section Header -->
                     <HBox alignment="CENTER_LEFT" maxWidth="1100" spacing="15" styleClass="section-header-box">
                         <Label styleClass="section-title" text="Recommended for You" />
                         <Region styleClass="section-header-divider" HBox.hgrow="ALWAYS" />
-                        <Hyperlink fx:id="viewAllLink" styleClass="view-all-link" text="View All" />
+                        <Hyperlink fx:id="viewAllLink" onAction="#handleViewAll" styleClass="view-all-link" text="View All" />
                     </HBox>
 
                     <!-- Job Cards Container -->
-                    <HBox alignment="CENTER" spacing="30" styleClass="cards-container">
+                    <HBox fx:id="cardsContainer" alignment="CENTER" spacing="30" styleClass="cards-container">
 
-                        <!-- CARD 1 -->
+                        <!-- CARD 1  -->
                         <VBox styleClass="job-card">
                             <HBox alignment="CENTER_LEFT" spacing="6" styleClass="card-badge-container">
                                 <ImageView fitHeight="14" fitWidth="14" preserveRatio="true">
@@ -92,17 +93,20 @@
                             </HBox>
 
                             <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-title-row">
-                                <Label styleClass="card-job-title" text="Church Helper" />
+                            
+                                <Label fx:id="cardJobTitle1" styleClass="card-job-title" text="Church Helper" />
                                 <Label styleClass="badge-green-pill" text="Volunteer Work" />
                             </HBox>
 
-                            <Label styleClass="card-location" text="Saint Joseph Parish • Tandang Sora QC" />
+                        
+                            <Label fx:id="cardLocation1" styleClass="card-location" text="Saint Joseph Parish • Tandang Sora QC" />
 
                             <Region prefHeight="10" />
 
                             <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
                                 <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/pesosign.png" /></image></ImageView>
-                                <Label styleClass="card-info-text" text="₱ 600 Allowance per day" />
+                               
+                                <Label fx:id="cardInfoText1" styleClass="card-info-text" text="₱ 600 Allowance per day" />
                             </HBox>
                             <HBox alignment="CENTER_LEFT" spacing="8" styleClass="card-info-row">
                                 <ImageView fitHeight="16" fitWidth="16" preserveRatio="true"><image><Image url="@../Assets/Icons/clock.png" /></image></ImageView>
@@ -117,7 +121,7 @@
                             </HBox>
 
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 2 -->
@@ -149,7 +153,7 @@
                             <Region prefHeight="26" />
 
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                         <!-- CARD 3 -->
@@ -187,7 +191,7 @@
                             </HBox>
 
                             <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" styleClass="card-action-btn" text="View &amp; Apply" />
+                            <Button maxWidth="Infinity" onAction="#handleOpenJobDetails" styleClass="card-action-btn" text="View &amp; Apply" />
                         </VBox>
 
                     </HBox>

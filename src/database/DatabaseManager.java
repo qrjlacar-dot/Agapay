@@ -1,6 +1,7 @@
 package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ public class DatabaseManager {
         setupDatabase();
     }
 
-    public void initConnection() {
+    public synchronized void initConnection() {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection("jdbc:sqlite:database.db");
@@ -36,14 +37,16 @@ public class DatabaseManager {
         String query = """
             CREATE TABLE IF NOT EXISTS userAccount (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                first_name TEXT NOT NULL,
-                last_name TEXT NOT NULL,
-                username TEXT NOT NULL UNIQUE,
-                contact_number TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL UNIQUE, 
+                email TEXT NOT NULL UNIQUE,
                 government_id TEXT NOT NULL UNIQUE,
                 role TEXT NOT NULL,
                 password TEXT NOT NULL,
-                raw_cv_text TEXT
+                raw_cv_text TEXT,
+                preferred_category TEXT,
+                work_setup TEXT,
+                employment_type TEXT,
+                preferred_location TEXT
             );
             """;
 
@@ -188,6 +191,7 @@ public class DatabaseManager {
 
     public void setupDatabase() {
         createUserAccountTable();
+        migrateUserAccountTable();
         createJobsTable();
         createSkillsTable();
         createAccommodationsTable();
@@ -197,14 +201,50 @@ public class DatabaseManager {
         createJobAccommodationsTable();
     }
 
+    private void migrateUserAccountTable() {
+        ensureColumnExists("userAccount", "preferred_category", "TEXT");
+        ensureColumnExists("userAccount", "work_setup", "TEXT");
+        ensureColumnExists("userAccount", "employment_type", "TEXT");
+        ensureColumnExists("userAccount", "preferred_location", "TEXT");
+    }
+
+    private void ensureColumnExists(String tableName, String columnName, String columnType) {
+        String tableInfoQuery = "PRAGMA table_info(" + tableName + ")";
+
+        try (Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(tableInfoQuery)) {
+            while (rs.next()) {
+                if (columnName.equalsIgnoreCase(rs.getString("name"))) {
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            logger.severe("Failed to inspect table schema: " + e.getMessage());
+            return;
+        }
+
+        String alterQuery = "ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType;
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(alterQuery);
+            logger.info("Added missing column " + columnName + " to " + tableName + ".");
+        } catch (SQLException e) {
+            logger.severe("Failed to add column " + columnName + " to " + tableName + ": " + e.getMessage());
+        }
+    }
+
     public void closeConnection() throws SQLException {
         if (connection != null && !connection.isClosed()) {
             connection.close();
+            connection = null;
             logger.info("Database connection closed.");
         }
     }
 
     public Connection getConnection() {
+        initConnection();
+        if (connection == null) {
+            throw new IllegalStateException("Database connection is unavailable.");
+        }
         return connection;
     }
 }

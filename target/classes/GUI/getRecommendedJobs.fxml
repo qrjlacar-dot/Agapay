@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../Assets/viewall.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.getRecommendedJobsController">
+
+    <!-- TOP: Navigation Bar -->
+    <top>
+        <fx:include source="NavBar.fxml" />
+    </top>
+
+    <!-- CENTER: Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="landing-scroll-pane" BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="25" styleClass="landing-content-vbox">
+                    <padding>
+                        <Insets bottom="40" left="60" right="60" top="20" />
+                    </padding>
+
+                    <!-- Page Header Section -->
+                    <HBox alignment="CENTER_LEFT" maxWidth="1150" spacing="15" styleClass="section-header-box">
+                        <Button fx:id="backButton" onAction="#goBack" styleClass="back-arrow-btn" text="‹" />
+                        <Label styleClass="section-title" text="Recommended for You" />
+                        <Region styleClass="section-header-divider" HBox.hgrow="ALWAYS" />
+                    </HBox>
+
+                    <!-- DYNAMIC GRID CONTAINER -->
+                
+                    <FlowPane fx:id="jobsFlowPane" alignment="CENTER" hgap="40.0" vgap="40.0" maxWidth="1150.0" />
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -1,37 +1,24 @@
+import java.io.IOException;
+import java.io.InputStream;
+
+import Utility.SceneSwitcher;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.io.InputStream;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
-        try {
+    public void start(Stage primaryStage) throws IOException {
+
             // 1. Load Custom Fonts globally into JavaFX Memory
             loadCustomFont("/Assets/Fonts/AtkinsonHyperlegibleNext-ExtraBold.ttf");
             loadCustomFont("/Assets/Fonts/AtkinsonHyperlegibleNext-SemiBold.ttf");
             loadCustomFont("/Assets/Fonts/AtkinsonHyperlegibleNext-Bold.ttf");
+            SceneSwitcher.setPrimaryStage(primaryStage);
 
-            // 2. Load the Login Screen FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Login.fxml"));
-            Parent root = loader.load();
-
-            // 3. Set up the Primary Stage
-            Scene scene = new Scene(root, 1280, 720); // Matches standard project size
-            primaryStage.setTitle("Agapay");
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(true);
-            primaryStage.show();
-
-        } catch (Exception e) {
-            System.err.println("Error initializing application:");
-            e.printStackTrace();
-        }
+            SceneSwitcher.switchTo("Login.fxml");
+            
     }
 
     /**

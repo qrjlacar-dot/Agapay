@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@jobdetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../Assets/jobdetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JobDetailsController">
 
     <top>
         <fx:include source="NavBar.fxml" />
@@ -54,12 +54,12 @@
                                 <!-- Job Overview Card -->
                                 <VBox styleClass="job-overview-card">
                                     <HBox alignment="CENTER_LEFT" styleClass="overview-title-row">
-                                        <Label styleClass="overview-job-title" text="Church Helper" />
+                                        <Label fx:id="jobTitleLabel" styleClass="overview-job-title" text="Church Helper" />
                                         <Region HBox.hgrow="ALWAYS" />
                                         <Label styleClass="badge-green-pill" text="Volunteer Work" />
                                     </HBox>
 
-                                    <Label styleClass="overview-location" text="Saint Joseph Parish • Tandang Sora QC" />
+                                    <Label fx:id="locationLabel" styleClass="overview-location" text="Saint Joseph Parish • Tandang Sora QC" />
                                     <Region prefHeight="16" />
 
                                     <VBox spacing="10" styleClass="overview-info-vbox">
@@ -67,13 +67,13 @@
                                             <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
                                                 <image><Image url="@../Assets/Icons/pesosign.png" /></image>
                                             </ImageView>
-                                            <Label styleClass="card-info-text" text="₱ 600 Allowance per day" />
+                                            <Label fx:id="payInfoLabel" styleClass="card-info-text" text="₱ 600 Allowance per day" />
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card-info-row">
                                             <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
                                                 <image><Image url="@../Assets/Icons/bluefillclock.png" /></image>
                                             </ImageView>
-                                            <Label styleClass="card-info-text" text="8 am - 4pm | 7 days only" />
+                                            <Label fx:id="scheduleInfoLabel" styleClass="card-info-text" text="8 am - 4pm | 7 days only" />
                                         </HBox>
                                     </VBox>
 
@@ -131,7 +131,7 @@
                             <VBox styleClass="right-column-card" GridPane.columnIndex="1">
                                 <VBox spacing="10" styleClass="desc-block">
                                     <Label styleClass="column-card-heading" text="Role Description" />
-                                    <Label styleClass="column-card-body" text="Supports parish operations by preparing worship spaces, maintaining facilities, welcoming attendees, and assisting with events and administration." wrapText="true" />
+                                        <Label fx:id="descriptionLabel" styleClass="column-card-body" text="Supports parish operations by preparing worship spaces, maintaining facilities, welcoming attendees, and assisting with events and administration." wrapText="true" />
                                 </VBox>
 
                                 <Region prefHeight="24" />

@@ -15,11 +15,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="rootStackPane" stylesheets="@applynow.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="rootStackPane" stylesheets="@../Assets/applynow.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplyNowController">
 
     <!-- MAIN PAGE CONTENT (Wrapped in BorderPane) -->
-    <!-- Added "blurred" to styleClass so the background dims/blurs when previewing the popup -->
-    <BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane, blurred">
+    <BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane">
 
         <top>
             <fx:include source="NavBar.fxml" />
@@ -175,8 +174,8 @@
         </center>
     </BorderPane>
 
-    <!-- SUCCESS POPUP OVERLAY (Set to visible="true" so it shows right away) -->
-    <StackPane fx:id="popupOverlay" styleClass="popup-overlay" visible="true">
+    <!-- SUCCESS POPUP OVERLAY -->
+    <StackPane fx:id="popupOverlay" styleClass="popup-overlay" visible="false">
         <VBox alignment="CENTER" maxWidth="560" prefHeight="280" styleClass="popup-card">
             <ImageView fitHeight="45" fitWidth="45" preserveRatio="true" styleClass="popup-icon">
                 <image><Image url="@../Assets/Icons/envelope.png" /></image>
