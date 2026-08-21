@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneSwitcher {
@@ -20,13 +21,20 @@ public class SceneSwitcher {
             Parent root = loader.load();
 
     
-        
-            primaryStage.setTitle("Agapay");
-            primaryStage.setResizable(true);
-            primaryStage.show();
+        primaryStage.setTitle("Agapay");
 
-            primaryStage.setMaximized(true);
-            primaryStage.show();
+        Scene currentScene = primaryStage.getScene();
+        if (currentScene == null) {
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+        } else {
+            currentScene.setRoot(root);
+        }
+
+        primaryStage.setResizable(true);
+        primaryStage.setMaximized(true);
+
+        primaryStage.show();
     }
 
 }
