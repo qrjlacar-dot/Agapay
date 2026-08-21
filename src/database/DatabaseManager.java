@@ -45,7 +45,7 @@ public class DatabaseManager {
         String query = """
             CREATE TABLE IF NOT EXISTS userAccount (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL UNIQUE,
                 government_id TEXT NOT NULL UNIQUE,
                 role TEXT NOT NULL,
                 password TEXT NOT NULL,

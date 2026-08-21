@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.regex.Pattern;
 
 import database.DatabaseManager;
+import model.registrationModel;
 
 public class AuthServices {
 
@@ -87,6 +88,45 @@ public class AuthServices {
             e.printStackTrace();
         }
         return userId;
+    }
+
+    public registrationModel getUserByUsername(String name) {
+        String query = "SELECT name, government_id, role, password FROM userAccount WHERE name = ?";
+        Connection conn = dbManager.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    registrationModel user = new registrationModel();
+                    user.setUsername(rs.getString("name"));
+                    user.setGovernmentId(rs.getString("government_id"));
+                    user.setRole(rs.getString("role"));
+                    user.setPassword(rs.getString("password"));
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user: " + e.getMessage());
+        }
+        return null;
+    }
+
+
+    public boolean updatePassword(registrationModel user) {
+        String query = "UPDATE userAccount SET password = ? WHERE name = ?";
+        Connection conn = dbManager.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, user.getPassword());
+            stmt.setString(2, user.getUsername());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating password: " + e.getMessage());
+            return false;
+        }
     }
 
     public int registerUserAndGetId(String name, String email, String govId, String password, String raw_cv_text) {

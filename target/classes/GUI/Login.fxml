@@ -88,7 +88,7 @@
                                     <children>
                                         <CheckBox mnemonicParsing="false" styleClass="remember-checkbox" text="Remember Me" />
                                         <Region HBox.hgrow="ALWAYS" />
-                                        <Label styleClass="link-label" text="Forgot Password?" />
+                                        <Label onMouseClicked="#goToForgotPassword" styleClass="link-label" text="Forgot Password?" />
                                     </children>
                                     <padding>
                                         <Insets top="5.0" />

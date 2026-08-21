@@ -71,6 +71,15 @@ public class LoginController {
         SceneSwitcher.switchTo("Register.fxml");
     }
 
+    @FXML
+    private void goToForgotPassword() {
+        try {
+            SceneSwitcher.switchTo("ForgotPassword.fxml");
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", "Could not load the Forgot Password page.");
+        }
+    }
+
     // --- ALERT HELPER METHOD ---
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
