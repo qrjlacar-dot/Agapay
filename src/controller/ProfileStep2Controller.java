@@ -70,7 +70,7 @@ public class ProfileStep2Controller {
             conn.commit(); 
             
             showAlert(Alert.AlertType.INFORMATION, "Profile Complete!", "Your profile is 100% set up. Let's find your perfect match!");
-            SceneSwitcher.switchTo("LandingPage.fxml"); 
+            SceneSwitcher.switchTo("getRecommendedJobs.fxml"); 
 
         } catch (SQLException e) {
             if (conn != null) {
@@ -137,7 +137,7 @@ public class ProfileStep2Controller {
     @FXML
     private void handleCancel() {
         try {
-            SceneSwitcher.switchTo("getRecommendedJobs.fxml");
+            SceneSwitcher.switchTo("LandingPage.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
