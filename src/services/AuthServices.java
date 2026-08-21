@@ -5,10 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import database.DatabaseManager;
-import model.registrationModel;
+import model.registrationModel; 
 
 public class AuthServices {
 
@@ -17,7 +18,9 @@ public class AuthServices {
 
     public static int activeUserId = -1;
 
-    private DatabaseManager dbManager = new DatabaseManager();
+    private final DatabaseManager dbManager = new DatabaseManager();
+    // Assuming ResumeParser is in the same package (services)
+    private final ResumeParser resumeParser = new ResumeParser();
 
     public boolean login(String email, String password) {
         if (email == null || password == null || email.isBlank()) {
@@ -31,10 +34,8 @@ public class AuthServices {
         }
 
         return false;
-
     }  
         
-
     public boolean register(String name, String email, String govId, String password, String confirmPassword, String rawCvText) {
 
         if (name.isBlank() || email.isBlank() || password.isBlank()) {
@@ -53,29 +54,28 @@ public class AuthServices {
             System.out.println("Error: Password must be 8+ characters with 1 uppercase and 1 number.");
             return false;
         }
-
         
         int newUserId = registerUserAndGetId(name, email, govId, password, rawCvText);
 
         if (newUserId != -1) {
             activeUserId = newUserId;
+            
+            if (rawCvText != null && !rawCvText.isBlank()) {
+                saveUserSkills(newUserId, rawCvText);
+            }
+            
             return true;
         }
 
         return false;
     }
 
-
-
-    // Helper Functions if needed.. 
     public int getUserIdOnLogin(String email, String password) {
-        
-
         int userId = -1;
-
         String sql = "SELECT user_id FROM userAccount WHERE email = ? AND password = ?";
+        Connection conn = dbManager.getConnection(); 
 
-        try (Connection conn = dbManager.getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, email);
             statement.setString(2, password);
 
@@ -90,16 +90,16 @@ public class AuthServices {
         return userId;
     }
 
-    public registrationModel getUserByEmail(String name) {
+    public registrationModel getUserByEmail(String email) {
         String query = "SELECT email, government_id, role, password FROM userAccount WHERE email = ?";
         Connection conn = dbManager.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, name);
+            stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     registrationModel user = new registrationModel();
-                    user.setUsername(rs.getString("name"));
+                    user.setUsername(rs.getString("email")); // Store the email for the password update
                     user.setGovernmentId(rs.getString("government_id"));
                     user.setRole(rs.getString("role"));
                     user.setPassword(rs.getString("password"));
@@ -112,14 +112,13 @@ public class AuthServices {
         return null;
     }
 
-
     public boolean updatePassword(registrationModel user) {
-        String query = "UPDATE userAccount SET password = ? WHERE name = ?";
+        String query = "UPDATE userAccount SET password = ? WHERE email = ?";
         Connection conn = dbManager.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, user.getPassword());
-            stmt.setString(2, user.getUsername());
+            stmt.setString(2, user.getUsername()); // This contains the email
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -129,12 +128,12 @@ public class AuthServices {
         }
     }
 
-    public int registerUserAndGetId(String name, String email, String govId, String password, String raw_cv_text) {
+    private int registerUserAndGetId(String name, String email, String govId, String password, String raw_cv_text) {
         int generatedUserId = -1;
-
         String sql = "INSERT INTO userAccount(name, email, government_id, role, password, raw_cv_text) VALUES (?, ?, ?, ?, ?, ?)";
+        Connection conn = dbManager.getConnection();
         
-        try (Connection conn = dbManager.getConnection(); PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, name);
             statement.setString(2, email);
             statement.setString(3, govId);
@@ -152,7 +151,35 @@ public class AuthServices {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
         return generatedUserId;
     }
-
+    
+    /**
+     * Extracts skills from the raw CV text and saves them to the userSkills table.
+     * This ensures the job recommendation engine has data to match against.
+     */
+    private void saveUserSkills(int userId, String rawCvText) {
+        List<Integer> extractedSkillIds = resumeParser.extractSkillIdsFromText(rawCvText);
+        
+        if (extractedSkillIds == null || extractedSkillIds.isEmpty()) {
+            System.out.println("No skills extracted from CV for user ID: " + userId);
+            return;
+        }
+        
+        String sql = "INSERT OR IGNORE INTO userSkills (user_id, skill_id) VALUES (?, ?)";
+        Connection conn = dbManager.getConnection();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            for (Integer skillId : extractedSkillIds) {
+                stmt.setInt(1, userId);
+                stmt.setInt(2, skillId);
+                stmt.addBatch(); 
+            }
+            stmt.executeBatch();
+            System.out.println("Successfully saved " + extractedSkillIds.size() + " skills for user ID: " + userId);
+        } catch (SQLException e) {
+            System.err.println("Failed to save user skills: " + e.getMessage());
+        }
+    }
 }

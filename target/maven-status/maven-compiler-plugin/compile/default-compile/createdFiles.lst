@@ -1,5 +1,4 @@
 model/Job.class
-controller/ApplyNowController.class
 database/DatabaseManager.class
 model/registrationModel.class
 controller/RegisterController.class

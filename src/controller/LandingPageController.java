@@ -6,12 +6,13 @@ import java.util.List;
 
 import Utility.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.Job;
 import services.AuthServices;
@@ -33,65 +34,140 @@ public class LandingPageController {
             return;
         }
 
+        List<Job> allJobs = recommendationService.getRecommendedJobsForUser(AuthServices.activeUserId);
+        
+        // Filter out jobs with a 0% match score
+        List<Job> matchedJobs = allJobs.stream()
+            .filter(job -> job.getMatchScore() > 0.0)
+            .toList();
+
         recommendedJobs.clear();
-        recommendedJobs.addAll(recommendationService.getRecommendedJobsForUser(AuthServices.activeUserId));
+        recommendedJobs.addAll(matchedJobs);
         populateCards();
     }
 
     private void populateCards() {
-        if (cardsContainer == null || recommendedJobs.isEmpty()) {
+        if (cardsContainer == null) {
             return;
         }
 
-        int cardIndex = 0;
-        for (Node cardNode : cardsContainer.getChildren()) {
-            if (!(cardNode instanceof VBox card)) {
-                continue;
-            }
+        // Clear any hardcoded placeholder cards from the FXML
+        cardsContainer.getChildren().clear();
 
-            if (cardIndex >= recommendedJobs.size()) {
-                card.setVisible(false);
-                card.setManaged(false);
-                continue;
-            }
+        // Display up to 3 jobs on the landing page to fit nicely in the HBox
+        int displayCount = Math.min(3, recommendedJobs.size());
+        
+        for (int i = 0; i < displayCount; i++) {
+            cardsContainer.getChildren().add(createJobCard(recommendedJobs.get(i)));
+        }
 
-            Job job = recommendedJobs.get(cardIndex);
-            
-            List<Label> infoLabels = findLabels(card, "card-info-text");
-            Label titleLabel = findFirstLabel(card, "card-job-title");
-            Label locationLabel = findFirstLabel(card, "card-location");
-            Label matchScoreLabel = findFirstLabel(card, "card-badge-label");
-            Button actionButton = findFirstButton(card, "card-action-btn");
-
-            // Combine the database match score with the hardcoded FXML text
-            if (matchScoreLabel != null) {
-                String currentText = matchScoreLabel.getText();
-                // Check prevents double-appending if the method runs multiple times
-                if (!currentText.contains("% Match")) {
-                    matchScoreLabel.setText(String.format("%.0f%% Match • %s", job.getMatchScore(), currentText));
-                }
-            }
-            
-            if (titleLabel != null) {
-                titleLabel.setText(job.getTitle());
-            }
-            if (locationLabel != null) {
-                locationLabel.setText(job.getEmployerName() + " • " + job.getLocation());
-            }
-            if (!infoLabels.isEmpty()) {
-                infoLabels.get(0).setText(job.getPayInfo());
-            }
-            if (infoLabels.size() > 1) {
-                infoLabels.get(1).setText(job.getScheduleInfo());
-            }
-            if (actionButton != null) {
-                actionButton.setOnAction(event -> openJobDetails(job));
-            }
-
-            cardIndex++;
+        // If no jobs match, show a friendly prompt
+        if (recommendedJobs.isEmpty()) {
+            Label emptyLabel = new Label("Complete your profile or adjust your skills to see matched jobs!");
+            emptyLabel.getStyleClass().add("card-location");
+            cardsContainer.getChildren().add(emptyLabel);
         }
     }
+
+    /**
+     * Dynamically generates the job card to match the new prominent badge design.
+     */
+    private VBox createJobCard(Job job) {
+        VBox card = new VBox();
+        card.getStyleClass().add("job-card");
+        card.setSpacing(10);
+        
+        // Set fixed width so they look uniform side-by-side in the HBox
+        card.setPrefWidth(320);
+        card.setMinWidth(320); 
+
+        // --- TOP BADGE HEADER ---
+        HBox topBadgeRow = new HBox();
+        topBadgeRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        topBadgeRow.setSpacing(10);
+
+        HBox matchBadgeContainer = new HBox();
+        matchBadgeContainer.getStyleClass().add("card-badge-container");
+        matchBadgeContainer.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Label matchIconLabel = new Label("★ ");
+        matchIconLabel.setStyle("-fx-text-fill: #000666; -fx-font-weight: bold;");
+
+        Label badgeLabel = new Label(String.format("%.0f%% Match", job.getMatchScore()));
+        badgeLabel.getStyleClass().add("badge-yellow-text");
+        badgeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 0.95em;");
+
+        matchBadgeContainer.getChildren().addAll(matchIconLabel, badgeLabel);
+
+        boolean isVolunteer = (job.getPayInfo() != null && job.getPayInfo().toLowerCase().contains("volunteer")) 
+                           || (job.getTitle() != null && job.getTitle().toLowerCase().contains("volunteer"));
+
+        Label greenPill = new Label(isVolunteer ? "Volunteer" : "Recommended");
+        greenPill.getStyleClass().add("badge-green-pill");
+
+        Region topSpacer = new Region();
+        HBox.setHgrow(topSpacer, javafx.scene.layout.Priority.ALWAYS);
+
+        topBadgeRow.getChildren().addAll(matchBadgeContainer, topSpacer, greenPill);
+
+        // --- TITLES & TEXT ---
+        Label titleLabel = new Label(job.getTitle());
+        titleLabel.getStyleClass().add("card-job-title");
+        titleLabel.setWrapText(true);
+
+        Label locationLabel = new Label(job.getEmployerName() + " • " + job.getLocation());
+        locationLabel.getStyleClass().add("card-location");
+        locationLabel.setWrapText(true);
+
+        HBox payRow = new HBox();
+        payRow.setSpacing(8);
+        payRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        payRow.getStyleClass().add("card-info-row");
+
+        ImageView payIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/pesosign.png")));
+        payIcon.setFitWidth(16);
+        payIcon.setFitHeight(16);
+
+        Label payLabel = new Label(job.getPayInfo() != null && !job.getPayInfo().isBlank() ? job.getPayInfo() : "Volunteer / To be Discussed");
+        payLabel.getStyleClass().add("card-info-text");
+        payRow.getChildren().addAll(payIcon, payLabel);
+
+        HBox scheduleRow = new HBox();
+        scheduleRow.setSpacing(8);
+        scheduleRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        scheduleRow.getStyleClass().add("card-info-row");
+
+        ImageView clockIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/clock.png")));
+        clockIcon.setFitWidth(16);
+        clockIcon.setFitHeight(16);
+
+        Label scheduleLabel = new Label(job.getScheduleInfo() != null && !job.getScheduleInfo().isBlank() ? job.getScheduleInfo() : "Flexible");
+        scheduleLabel.getStyleClass().add("card-info-text");
+        scheduleRow.getChildren().addAll(clockIcon, scheduleLabel);
+
+        Region grow = new Region();
+        VBox.setVgrow(grow, javafx.scene.layout.Priority.ALWAYS);
+
+        Button actionButton = new Button("View & Apply");
+        actionButton.setMaxWidth(Double.MAX_VALUE);
+        actionButton.getStyleClass().add("card-action-btn");
+        actionButton.setOnAction(event -> openJobDetails(job));
+
+        card.getChildren().addAll(
+            topBadgeRow,
+            titleLabel,
+            locationLabel,
+            payRow,
+            scheduleRow,
+            grow,
+            actionButton
+        );
+
+        return card;
+    }
     
+    // --- NAVIGATION HANDLERS ---
+
     @FXML
     private void handleLogout() {
         AuthServices.activeUserId = -1; 
@@ -151,46 +227,6 @@ public class LandingPageController {
             SceneSwitcher.switchTo("JobDetails.fxml");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private Label findFirstLabel(VBox card, String styleClass) {
-        List<Label> labels = new ArrayList<>();
-        collectLabels(card, styleClass, labels);
-        return labels.isEmpty() ? null : labels.get(0);
-    }
-
-    private List<Label> findLabels(VBox card, String styleClass) {
-        List<Label> labels = new ArrayList<>();
-        collectLabels(card, styleClass, labels);
-        return labels;
-    }
-
-    private Button findFirstButton(VBox card, String styleClass) {
-        List<Button> buttons = new ArrayList<>();
-        collectButtons(card, styleClass, buttons);
-        return buttons.isEmpty() ? null : buttons.get(0);
-    }
-
-    private void collectLabels(Node node, String styleClass, List<Label> output) {
-        if (node instanceof Label label && label.getStyleClass().contains(styleClass)) {
-            output.add(label);
-        }
-        if (node instanceof Pane pane) {
-            for (Node child : pane.getChildren()) {
-                collectLabels(child, styleClass, output);
-            }
-        }
-    }
-
-    private void collectButtons(Node node, String styleClass, List<Button> output) {
-        if (node instanceof Button button && button.getStyleClass().contains(styleClass)) {
-            output.add(button);
-        }
-        if (node instanceof Pane pane) {
-            for (Node child : pane.getChildren()) {
-                collectButtons(child, styleClass, output);
-            }
         }
     }
 }

@@ -48,7 +48,7 @@ public class ProfileStep2Controller {
         Connection conn = null;
         try {
             conn = dbManager.getConnection();
-            conn.setAutoCommit(false); 
+            conn.setAutoCommit(false); // Start transaction
             
             String deleteSql = "DELETE FROM user_accommodations WHERE user_id = ?";
             try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
@@ -67,7 +67,7 @@ public class ProfileStep2Controller {
                 }
             }
             
-            conn.commit(); 
+            conn.commit(); // Save changes
             
             showAlert(Alert.AlertType.INFORMATION, "Profile Complete!", "Your profile is 100% set up. Let's find your perfect match!");
             SceneSwitcher.switchTo("getRecommendedJobs.fxml"); 
@@ -87,10 +87,10 @@ public class ProfileStep2Controller {
             showAlert(Alert.AlertType.ERROR, "Navigation Error", "Failed to load the landing page.");
             e.printStackTrace();
         } finally {
+            // CLEANUP: Only reset auto-commit, DO NOT close the shared connection
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
-                    conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -122,6 +122,8 @@ public class ProfileStep2Controller {
                 insertStmt.setInt(2, accommId);
                 insertStmt.executeUpdate();
             }
+        } else {
+            System.err.println("Warning: Accommodation '" + accommodationName + "' not found in database.");
         }
     }
     

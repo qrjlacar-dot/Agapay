@@ -42,11 +42,9 @@ public class getRecommendedJobsController {
         } else {
             allJobs = recommendationService.getRecommendedJobsForUser(AuthServices.activeUserId);
         }
-        List<Job> matchedJobs = allJobs.stream()
-            .filter(job -> job.getMatchScore() > 0.0)
-            .toList();
+
         renderedJobs.clear();
-        renderedJobs.addAll(matchedJobs);
+        renderedJobs.addAll(allJobs);
         renderCards();
 
         System.out.println("View All Page: Loaded " + renderedJobs.size() + " jobs for display.");

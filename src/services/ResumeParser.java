@@ -80,12 +80,13 @@ public class ResumeParser {
             return matchedSkillIds;
         }
 
-        // Normalize text: lowercase and replace punctuation with spaces to avoid hyphen/slash misses
-        String normalizedText = " " + rawText.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", " ") + " ";
+        String normalizedText = normalizeForMatching(rawText);
         String sql = "SELECT skill_id, name FROM masterSkills"; 
+        
+        // Grab connection outside of try-with-resources to keep it alive
+        Connection conn = dbManager.getConnection();
 
-        try (Connection conn = dbManager.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql);
+        try (PreparedStatement statement = conn.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
 
             while (rs.next()) {
@@ -105,10 +106,13 @@ public class ResumeParser {
                 }
 
                 for (String keyword : keywords) {
-                    Pattern pattern = Pattern.compile("(?<![a-z0-9])" + Pattern.quote(keyword) + "(?![a-z0-9])");
+                    String normalizedKeyword = normalizeForMatching(keyword).trim();
+                    Pattern pattern = Pattern.compile(
+                            "(?<![a-z0-9])" + Pattern.quote(normalizedKeyword)
+                                    + "(?![a-z0-9])");
                     if (pattern.matcher(normalizedText).find()) {
                         matchedSkillIds.add(skillId);
-                        break; // Move to next skill once matched
+                        break;
                     }
                 }
             }
@@ -118,6 +122,11 @@ public class ResumeParser {
         return matchedSkillIds;
     }
 
+    private String normalizeForMatching(String value) {
+        return " " + value.toLowerCase(Locale.ROOT)
+                .replaceAll("[^a-z0-9]+", " ") + " ";
+    }
+
     public void linkSkillsToUser(int userId, List<Integer> skillIds) {
         if (skillIds == null || skillIds.isEmpty()) { 
             return; 
@@ -125,8 +134,10 @@ public class ResumeParser {
         
         String sql = "INSERT OR IGNORE INTO userSkills (user_id, skill_id) VALUES (?, ?)";
 
-        try (Connection conn = dbManager.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+        Connection conn = dbManager.getConnection();
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
             
             for (int skillId : skillIds) {
                 statement.setInt(1, userId);

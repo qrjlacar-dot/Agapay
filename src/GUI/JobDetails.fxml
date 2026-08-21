@@ -15,160 +15,175 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane" stylesheets="@../Assets/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JobDetailsController">
+<!-- NEW MASTER ROOT: StackPane allows the popup to sit on top of the BorderPane -->
+<StackPane fx:id="rootStackPane" stylesheets="@../Assets/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.JobDetailsController">
 
-    <top>
-        <fx:include source="NavBar.fxml" />
-    </top>
+    <!-- Main Page Content -->
+    <BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane">
+        <top>
+            <fx:include source="NavBar.fxml" />
+        </top>
 
-    <center>
-        <ScrollPane fitToWidth="true" styleClass="details-scroll-pane" BorderPane.alignment="CENTER">
-            <content>
-                <VBox alignment="CENTER" styleClass="details-outer-container">
-                    <padding>
-                        <Insets bottom="40" left="60" right="60" top="30" />
-                    </padding>
+        <center>
+            <ScrollPane fitToWidth="true" styleClass="details-scroll-pane" BorderPane.alignment="CENTER">
+                <content>
+                    <VBox alignment="CENTER" styleClass="details-outer-container">
+                        <padding>
+                            <Insets bottom="40" left="60" right="60" top="30" />
+                        </padding>
 
-                    <!-- Main Balanced Container -->
-                    <VBox alignment="TOP_LEFT" spacing="24" styleClass="page-content-group">
+                        <VBox alignment="TOP_LEFT" spacing="24" styleClass="page-content-group">
 
-                        <!-- Back Navigation Header -->
-                        <HBox alignment="CENTER_LEFT" spacing="4" styleClass="section-header-box">
-                            <Button fx:id="backButton" styleClass="back-arrow-btn" text="‹" />
-                            <Label styleClass="back-link-label" text="Back to All Jobs" />
-                        </HBox>
+                            <!-- Back Navigation Header -->
+                            <HBox alignment="CENTER_LEFT" spacing="4" styleClass="section-header-box">
+                                <Button fx:id="backButton" styleClass="back-arrow-btn" text="‹" />
+                                <Label styleClass="back-link-label" text="Back to All Jobs" />
+                            </HBox>
 
-                        <!-- Two Column Grid Layout for Optimal Visual Balance & Padding -->
-                        <GridPane hgap="40" vgap="0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
-                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints vgrow="SOMETIMES" />
-                            </rowConstraints>
+                            <!-- Two Column Grid Layout -->
+                            <GridPane hgap="40" vgap="0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
 
-                            <!-- LEFT COLUMN: Overview Card & Accessibility Section -->
-                            <VBox spacing="20" styleClass="left-column-wrapper" GridPane.columnIndex="0">
-
-                                <!-- Job Overview Card -->
-                                <VBox styleClass="job-overview-card">
-                                    <HBox alignment="CENTER_LEFT" styleClass="overview-title-row">
-                                        <Label fx:id="jobTitleLabel" styleClass="overview-job-title" text="Church Helper" />
-                                        <Region HBox.hgrow="ALWAYS" />
-                                        <Label styleClass="badge-green-pill" text="Volunteer Work" />
-                                    </HBox>
-
-                                    <Label fx:id="locationLabel" styleClass="overview-location" text="Saint Joseph Parish • Tandang Sora QC" />
-                                    <Region prefHeight="16" />
-
-                                    <VBox spacing="10" styleClass="overview-info-vbox">
-                                        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card-info-row">
-                                            <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                                                <image><Image url="@../Assets/Icons/pesosign.png" /></image>
-                                            </ImageView>
-                                            <Label fx:id="payInfoLabel" styleClass="card-info-text" text="₱ 600 Allowance per day" />
+                                <!-- LEFT COLUMN -->
+                                <VBox spacing="20" styleClass="left-column-wrapper" GridPane.columnIndex="0">
+                                    <VBox styleClass="job-overview-card">
+                                        <HBox alignment="CENTER_LEFT" styleClass="overview-title-row">
+                                            <Label fx:id="jobTitleLabel" styleClass="overview-job-title" text="Church Helper" />
+                                            <Region HBox.hgrow="ALWAYS" />
+                                            <Label styleClass="badge-green-pill" text="Volunteer Work" />
                                         </HBox>
-                                        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card-info-row">
-                                            <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                                                <image><Image url="@../Assets/Icons/bluefillclock.png" /></image>
+
+                                        <Label fx:id="locationLabel" styleClass="overview-location" text="Saint Joseph Parish • Tandang Sora QC" />
+                                        <Region prefHeight="16" />
+
+                                        <VBox spacing="10" styleClass="overview-info-vbox">
+                                            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card-info-row">
+                                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                                                    <image><Image url="@../Assets/Icons/pesosign.png" /></image>
+                                                </ImageView>
+                                                <Label fx:id="payInfoLabel" styleClass="card-info-text" text="₱ 600 Allowance per day" />
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card-info-row">
+                                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                                                    <image><Image url="@../Assets/Icons/bluefillclock.png" /></image>
+                                                </ImageView>
+                                                <Label fx:id="scheduleInfoLabel" styleClass="card-info-text" text="8 am - 4pm | 7 days only" />
+                                            </HBox>
+                                        </VBox>
+
+                                        <Region prefHeight="24" />
+
+                                        <Button fx:id="applyButton" styleClass="card-action-btn" text="Apply Now">
+                                            <graphic>
+                                                <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                                                    <image><Image url="@../Assets/Icons/airplane.png" /></image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </VBox>
+
+                                    <!-- Accessibility & Accommodations Section -->
+                                    <VBox spacing="12" styleClass="accessibility-section-box">
+                                        <HBox alignment="CENTER_LEFT" spacing="8" styleClass="accessibility-header-row">
+                                            <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+                                                <image><Image url="@../Assets/Icons/accessibility.png" /></image>
                                             </ImageView>
-                                            <Label fx:id="scheduleInfoLabel" styleClass="card-info-text" text="8 am - 4pm | 7 days only" />
+                                            <Label styleClass="section-heading-title" text="Accessibility &amp; Accommodations" />
                                         </HBox>
+
+                                        <HBox spacing="16" styleClass="accessibility-cards-row">
+                                            <VBox spacing="10" styleClass="sub-feature-card" HBox.hgrow="ALWAYS">
+                                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                                    <StackPane styleClass="icon-square">
+                                                        <ImageView fitHeight="18" fitWidth="18" preserveRatio="true">
+                                                            <image><Image url="@../Assets/Icons/bluewheelchair.png" /></image>
+                                                        </ImageView>
+                                                    </StackPane>
+                                                    <Label styleClass="sub-card-title" text="Mobility&#10;&amp; Access Support" wrapText="true" />
+                                                </HBox>
+                                                <Label styleClass="sub-card-body" text="Ramps, elevators, and wide aisles provided across all parish grounds and altar areas." wrapText="true" />
+                                            </VBox>
+
+                                            <VBox spacing="10" styleClass="sub-feature-card" HBox.hgrow="ALWAYS">
+                                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                                    <StackPane styleClass="icon-square">
+                                                        <ImageView fitHeight="18" fitWidth="18" preserveRatio="true">
+                                                            <image><Image url="@../Assets/Icons/bluefillclock.png" /></image>
+                                                        </ImageView>
+                                                    </StackPane>
+                                                    <Label styleClass="sub-card-title" text="Flexible Pace&#10;&amp; Scheduling" wrapText="true" />
+                                                </HBox>
+                                                <Label styleClass="sub-card-body" text="Adjusted scheduling and relaxed pacing tailored for senior stamina and personal rest breaks." wrapText="true" />
+                                            </VBox>
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+
+                                <!-- RIGHT COLUMN -->
+                                <VBox styleClass="right-column-card" GridPane.columnIndex="1">
+                                    <VBox spacing="10" styleClass="desc-block">
+                                        <Label styleClass="column-card-heading" text="Role Description" />
+                                        <Label fx:id="descriptionLabel" styleClass="column-card-body" text="Supports parish operations by preparing worship spaces, maintaining facilities, welcoming attendees, and assisting with events and administration." wrapText="true" />
                                     </VBox>
 
                                     <Region prefHeight="24" />
 
-                                    <Button fx:id="applyButton" styleClass="card-action-btn" text="Apply Now">
-                                        <graphic>
-                                            <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                                                <image><Image url="@../Assets/Icons/airplane.png" /></image>
-                                            </ImageView>
-                                        </graphic>
-                                    </Button>
-                                </VBox>
+                                    <VBox spacing="12" styleClass="resp-block">
+                                        <Label styleClass="column-card-heading" text="Key Responsibilities" />
 
-                                <!-- Accessibility & Accommodations Section -->
-                                <VBox spacing="12" styleClass="accessibility-section-box">
-                                    <HBox alignment="CENTER_LEFT" spacing="8" styleClass="accessibility-header-row">
-                                        <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
-                                            <image><Image url="@../Assets/Icons/accessibility.png" /></image>
-                                        </ImageView>
-                                        <Label styleClass="section-heading-title" text="Accessibility &amp; Accommodations" />
-                                    </HBox>
-
-                                    <!-- Sub-Cards Container -->
-                                    <HBox spacing="16" styleClass="accessibility-cards-row">
-                                        <VBox spacing="10" styleClass="sub-feature-card" HBox.hgrow="ALWAYS">
-                                            <HBox alignment="CENTER_LEFT" spacing="10">
-                                                <StackPane styleClass="icon-square">
-                                                    <ImageView fitHeight="18" fitWidth="18" preserveRatio="true">
-                                                        <image><Image url="@../Assets/Icons/bluewheelchair.png" /></image>
-                                                    </ImageView>
-                                                </StackPane>
-                                                <Label styleClass="sub-card-title" text="Mobility&#10;&amp; Access Support" wrapText="true" />
+                                        <VBox spacing="12" styleClass="bullet-list-vbox">
+                                            <HBox alignment="TOP_LEFT" spacing="10">
+                                                <Label styleClass="bullet-dot" text="•" />
+                                                <Label styleClass="column-card-body" text="Prepare sanctuary spaces and arrange worship materials." wrapText="true" HBox.hgrow="ALWAYS" />
                                             </HBox>
-                                            <Label styleClass="sub-card-body" text="Ramps, elevators, and wide aisles provided across all parish grounds and altar areas." wrapText="true" />
-                                        </VBox>
-
-                                        <VBox spacing="10" styleClass="sub-feature-card" HBox.hgrow="ALWAYS">
-                                            <HBox alignment="CENTER_LEFT" spacing="10">
-                                                <StackPane styleClass="icon-square">
-                                                    <ImageView fitHeight="18" fitWidth="18" preserveRatio="true">
-                                                        <image><Image url="@../Assets/Icons/bluefillclock.png" /></image>
-                                                    </ImageView>
-                                                </StackPane>
-                                                <Label styleClass="sub-card-title" text="Flexible Pace&#10;&amp; Scheduling" wrapText="true" />
+                                            <HBox alignment="TOP_LEFT" spacing="10">
+                                                <Label styleClass="bullet-dot" text="•" />
+                                                <Label styleClass="column-card-body" text="Maintain cleanliness across the church grounds." wrapText="true" HBox.hgrow="ALWAYS" />
                                             </HBox>
-                                            <Label styleClass="sub-card-body" text="Adjusted scheduling and relaxed pacing tailored for senior stamina and personal rest breaks." wrapText="true" />
+                                            <HBox alignment="TOP_LEFT" spacing="10">
+                                                <Label styleClass="bullet-dot" text="•" />
+                                                <Label styleClass="column-card-body" text="Welcome and guide incoming attendees." wrapText="true" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+                                            <HBox alignment="TOP_LEFT" spacing="10">
+                                                <Label styleClass="bullet-dot" text="•" />
+                                                <Label styleClass="column-card-body" text="Support community outreach logistics and events." wrapText="true" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+                                            <HBox alignment="TOP_LEFT" spacing="10">
+                                                <Label styleClass="bullet-dot" text="•" />
+                                                <Label styleClass="column-card-body" text="Assist parish staff with basic administrative tasks." wrapText="true" HBox.hgrow="ALWAYS" />
+                                            </HBox>
                                         </VBox>
-                                    </HBox>
-                                </VBox>
-
-                            </VBox>
-
-                            <!-- RIGHT COLUMN: Role Description & Key Responsibilities -->
-                            <VBox styleClass="right-column-card" GridPane.columnIndex="1">
-                                <VBox spacing="10" styleClass="desc-block">
-                                    <Label styleClass="column-card-heading" text="Role Description" />
-                                        <Label fx:id="descriptionLabel" styleClass="column-card-body" text="Supports parish operations by preparing worship spaces, maintaining facilities, welcoming attendees, and assisting with events and administration." wrapText="true" />
-                                </VBox>
-
-                                <Region prefHeight="24" />
-
-                                <VBox spacing="12" styleClass="resp-block">
-                                    <Label styleClass="column-card-heading" text="Key Responsibilities" />
-
-                                    <VBox spacing="12" styleClass="bullet-list-vbox">
-                                        <HBox alignment="TOP_LEFT" spacing="10">
-                                            <Label styleClass="bullet-dot" text="•" />
-                                            <Label styleClass="column-card-body" text="Prepare sanctuary spaces and arrange worship materials." wrapText="true" HBox.hgrow="ALWAYS" />
-                                        </HBox>
-                                        <HBox alignment="TOP_LEFT" spacing="10">
-                                            <Label styleClass="bullet-dot" text="•" />
-                                            <Label styleClass="column-card-body" text="Maintain cleanliness across the church grounds." wrapText="true" HBox.hgrow="ALWAYS" />
-                                        </HBox>
-                                        <HBox alignment="TOP_LEFT" spacing="10">
-                                            <Label styleClass="bullet-dot" text="•" />
-                                            <Label styleClass="column-card-body" text="Welcome and guide incoming attendees." wrapText="true" HBox.hgrow="ALWAYS" />
-                                        </HBox>
-                                        <HBox alignment="TOP_LEFT" spacing="10">
-                                            <Label styleClass="bullet-dot" text="•" />
-                                            <Label styleClass="column-card-body" text="Support community outreach logistics and events." wrapText="true" HBox.hgrow="ALWAYS" />
-                                        </HBox>
-                                        <HBox alignment="TOP_LEFT" spacing="10">
-                                            <Label styleClass="bullet-dot" text="•" />
-                                            <Label styleClass="column-card-body" text="Assist parish staff with basic administrative tasks." wrapText="true" HBox.hgrow="ALWAYS" />
-                                        </HBox>
                                     </VBox>
                                 </VBox>
-                            </VBox>
-
-                        </GridPane>
-
+                            </GridPane>
+                        </VBox>
                     </VBox>
-                </VBox>
-            </content>
-        </ScrollPane>
-    </center>
-</BorderPane>
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+
+    <!-- SUCCESS POPUP OVERLAY -->
+    <StackPane fx:id="popupOverlay" styleClass="popup-overlay" visible="false">
+        <VBox alignment="CENTER" maxWidth="560" prefHeight="320" styleClass="popup-card">
+            <ImageView fitHeight="45" fitWidth="45" preserveRatio="true" styleClass="popup-icon">
+                <image><Image url="@../Assets/Icons/envelope.png" /></image>
+            </ImageView>
+            <Region prefHeight="16" />
+            <Label styleClass="popup-title" text="Thank You for Applying!" />
+            <Region prefHeight="10" />
+            <Label styleClass="popup-message" text="Our team will look into your profile and get in touch with you via your registered email &amp; number soon." textAlignment="CENTER" wrapText="true" />
+            
+            <Region prefHeight="24" />
+            
+            <Button mnemonicParsing="false" onAction="#closePopupAndReturn" prefWidth="250" styleClass="card-action-btn" text="Return to Dashboard" />
+        </VBox>
+    </StackPane>
+
+</StackPane>

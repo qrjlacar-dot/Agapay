@@ -16,35 +16,6 @@ public class JobRecommendationServices {
     private final DatabaseManager dbManager = new DatabaseManager();
     private final ResumeParser resumeParser = new ResumeParser();
     
-    public List<Job> getRecommendedJobsForUser(int userId) {
-        List<Job> allJobs = fetchAllJobs();
-
-        
-        List<Integer> userSkills = fetchTraits(userId, "userSkills", "user_id", "skill_id");
-        
-        
-        List<Integer> userAccoms = fetchTraits(userId, "user_accommodations", "user_id", "accommodation_id");
-        
-        for (Job job : allJobs) {
-            List<Integer> jobSkills = fetchTraits(job.getJobId(), "job_skills", "job_id", "skill_id");
-            if (jobSkills.isEmpty()) {
-                String jobText = job.getTitle() + " " + job.getDescription();
-                jobSkills = resumeParser.extractSkillIdsFromText(jobText);
-            }
-            
-            
-            List<Integer> jobAccoms = fetchTraits(job.getJobId(), "job_accommodations", "job_id", "accommodation_id");
-
-            
-            double matchScore = calculateMatchScore(userSkills, userAccoms, jobSkills, jobAccoms);
-            job.setMatchScore(matchScore);
-        }
-
-        // Sort descending (highest match score first)
-        allJobs.sort((j1, j2) -> Double.compare(j2.getMatchScore(), j1.getMatchScore()));
-
-        return allJobs;
-    }
 
     public List<Job> searchRecommendedJobsForUser(int userId, String query) {
         List<Job> recommended = getRecommendedJobsForUser(userId);
@@ -70,33 +41,67 @@ public class JobRecommendationServices {
     private boolean containsIgnoreCase(String value, String normalizedQuery) {
         return value != null && value.toLowerCase(Locale.ROOT).contains(normalizedQuery);
     }
+public List<Job> getRecommendedJobsForUser(int userId) {
+        List<Job> allJobs = fetchAllJobs();
 
-    // This is where the moments turn into memories.
+        List<Integer> userSkills = fetchTraits(userId, "userSkills", "user_id", "skill_id");
+        List<Integer> userAccoms = fetchTraits(userId, "user_accommodations", "user_id", "accommodation_id");
+        
+        System.out.println("\n=== STARTING MATCHING FOR USER ID: " + userId + " ===");
+        System.out.println("Loaded User Skills: " + userSkills);
+        System.out.println("Loaded User Accommodations: " + userAccoms);
+
+        for (Job job : allJobs) {
+            List<Integer> jobSkills = fetchTraits(job.getJobId(), "job_skills", "job_id", "skill_id");
+            if (jobSkills.isEmpty()) {
+                String jobText = job.getTitle() + " " + job.getDescription();
+                jobSkills = resumeParser.extractSkillIdsFromText(jobText);
+            }
+            
+            List<Integer> jobAccoms = fetchTraits(job.getJobId(), "job_accommodations", "job_id", "accommodation_id");
+
+            // Pass the job title so we know which job is printing
+            double matchScore = calculateMatchScore(userSkills, userAccoms, jobSkills, jobAccoms, job.getTitle());
+            job.setMatchScore(matchScore);
+        }
+
+        allJobs.sort((j1, j2) -> Double.compare(j2.getMatchScore(), j1.getMatchScore()));
+        return allJobs;
+    }
+
     private double calculateMatchScore(List<Integer> userSkills, List<Integer> userAccoms, 
-                                       List<Integer> jobSkills, List<Integer> jobAccoms) {
+                                       List<Integer> jobSkills, List<Integer> jobAccoms, String jobTitle) {
         
         int totalRequirements = jobSkills.size() + jobAccoms.size();
         
-        // A job without stored requirements cannot be verified as a match.
-        if (totalRequirements == 0) return 0.0;
+        System.out.println("\n--- Job: " + jobTitle + " ---");
+        System.out.println("Job Skills Required: " + jobSkills);
+        System.out.println("Job Accoms Provided: " + jobAccoms);
+
+        if (totalRequirements == 0) {
+            System.out.println("Result: 0.0% (Job has 0 requirements)");
+            return 0.0;
+        }
 
         int matchCount = 0;
 
-        // Check for skill overlaps
         for (Integer requiredSkill : jobSkills) {
             if (userSkills.contains(requiredSkill)) {
                 matchCount++;
             }
         }
 
-        // Check for accommodation overlaps
         for (Integer providedAccom : jobAccoms) {
             if (userAccoms.contains(providedAccom)) {
                 matchCount++;
             }
         }
 
-        return ((double) matchCount / totalRequirements) * 100.0;
+        double finalScore = ((double) matchCount / totalRequirements) * 100.0;
+        System.out.println("Matches Found: " + matchCount + " out of " + totalRequirements);
+        System.out.println("Final Score: " + finalScore + "%");
+        
+        return finalScore;
     }
 
     // Helper Functions that are really helpful
