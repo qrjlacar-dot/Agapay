@@ -1,35 +1,43 @@
 package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseManager {
 
-    private Connection connection;
+    private static final String DB_URL = "jdbc:sqlite:database.db";
     private static final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
+    private Connection connection;
 
     public DatabaseManager() {
-        initConnection();
-        setupDatabase();
+        if (initConnection()) {
+            setupDatabase();
+        } else {
+            logger.severe("Database setup aborted due to failed connection initialization.");
+        }
     }
 
-    public synchronized void initConnection() {
+    public synchronized boolean initConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+                connection = DriverManager.getConnection(DB_URL);
 
-                // Enforce SQLite Foreign Key constraints
+                // Enforce SQLite Foreign Key constraints per connection
                 try (Statement stmt = connection.createStatement()) {
                     stmt.execute("PRAGMA foreign_keys = ON;");
                 }
 
-                logger.info("Database connection initialized with foreign keys enabled");
+                logger.info("Database connection successfully established to " + DB_URL);
             }
+            return true;
         } catch (SQLException e) {
-            logger.severe("Database connection error: " + e.getMessage());
+            logger.log(Level.SEVERE, "Database connection failed. Ensure sqlite-jdbc driver is in classpath: " + e.getMessage(), e);
+            return false;
         }
     }
 
@@ -37,8 +45,7 @@ public class DatabaseManager {
         String query = """
             CREATE TABLE IF NOT EXISTS userAccount (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL UNIQUE, 
-                email TEXT NOT NULL UNIQUE,
+                username TEXT NOT NULL UNIQUE,
                 government_id TEXT NOT NULL UNIQUE,
                 role TEXT NOT NULL,
                 password TEXT NOT NULL,
@@ -67,10 +74,9 @@ public class DatabaseManager {
                 description TEXT NOT NULL,
                 location TEXT NOT NULL,
                 contact_number TEXT NOT NULL,
-                
                 pay_info TEXT DEFAULT 'To be Discussed',
                 schedule_info TEXT DEFAULT 'Flexible'
-                );
+            );
             """;
 
         try (Statement statement = connection.createStatement()) {
@@ -202,6 +208,7 @@ public class DatabaseManager {
     }
 
     private void migrateUserAccountTable() {
+        ensureColumnExists("userAccount", "raw_cv_text", "TEXT");
         ensureColumnExists("userAccount", "preferred_category", "TEXT");
         ensureColumnExists("userAccount", "work_setup", "TEXT");
         ensureColumnExists("userAccount", "employment_type", "TEXT");
@@ -240,7 +247,7 @@ public class DatabaseManager {
         }
     }
 
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
         initConnection();
         if (connection == null) {
             throw new IllegalStateException("Database connection is unavailable.");
