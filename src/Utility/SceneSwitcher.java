@@ -26,6 +26,9 @@ public class SceneSwitcher {
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
             primaryStage.show();
+
+            primaryStage.setMaximized(true);
+            primaryStage.show();
     }
 
 }
