@@ -56,7 +56,7 @@
                                         <HBox alignment="CENTER_LEFT" styleClass="overview-title-row">
                                             <Label fx:id="jobTitleLabel" styleClass="overview-job-title" text="Church Helper" />
                                             <Region HBox.hgrow="ALWAYS" />
-                                            <Label styleClass="badge-green-pill" text="Volunteer Work" />
+                                            <Label fx:id="jobTypeBadge" styleClass="badge-green-pill" />
                                         </HBox>
 
                                         <Label fx:id="locationLabel" styleClass="overview-location" text="Saint Joseph Parish • Tandang Sora QC" />

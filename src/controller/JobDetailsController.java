@@ -31,6 +31,8 @@ public class JobDetailsController {
     private final JobRecommendationServices recommendationService = new JobRecommendationServices();
     private Job currentJob;
 
+    @FXML private Label jobTypeBadge;
+    
     @FXML
     private void initialize() {
         // Ensure popup is hidden when the page loads
@@ -48,7 +50,7 @@ public class JobDetailsController {
         }
     }
 
-    private void loadJob() {
+   private void loadJob() {
         currentJob = JobSelectionState.getSelectedJob();
 
         if (currentJob == null && AuthServices.activeUserId != -1) {
@@ -67,6 +69,29 @@ public class JobDetailsController {
         if (payInfoLabel != null) payInfoLabel.setText(currentJob.getPayInfo());
         if (scheduleInfoLabel != null) scheduleInfoLabel.setText(currentJob.getScheduleInfo());
         if (descriptionLabel != null) descriptionLabel.setText(currentJob.getDescription());
+
+    
+        // 2. Dynamically determine the job type for the pill badge
+        if (jobTypeBadge != null) {
+            String pay = currentJob.getPayInfo() != null ? currentJob.getPayInfo().toLowerCase() : "";
+            String schedule = currentJob.getScheduleInfo() != null ? currentJob.getScheduleInfo().toLowerCase() : "";
+            
+            String badgeText = "Standard Role"; // Default fallback
+            
+            if (pay.contains("volunteer")) {
+                badgeText = "Volunteer Work";
+            } else if (schedule.contains("project")) {
+                badgeText = "Project-Based";
+            } else if (schedule.contains("shift") || schedule.contains("night")) {
+                badgeText = "Shift Work";
+            } else if (schedule.contains("flexible") || pay.contains("commission") || pay.contains("hour")) {
+                badgeText = "Freelance / Part-Time";
+            } else if (schedule.contains("am") || schedule.contains("pm")) {
+                badgeText = "Full-Time";
+            }
+            
+            jobTypeBadge.setText(badgeText);
+        }
     }
 
     @FXML
@@ -109,7 +134,7 @@ public class JobDetailsController {
     private void handleBack() {
         System.out.println("Returning to View All...");
         try {
-            SceneSwitcher.switchTo("getRecommendedJobs.fxml"); 
+            SceneSwitcher.switchTo("ViewAll.fxml"); 
         } catch (IOException e) {
             e.printStackTrace();
         }
