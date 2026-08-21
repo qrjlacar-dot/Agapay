@@ -60,4 +60,8 @@ public class registrationModel {
     public File getUploadedResume() {
         return uploadedResume;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
