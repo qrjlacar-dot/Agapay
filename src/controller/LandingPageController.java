@@ -117,7 +117,7 @@ public class LandingPageController {
     private void handleFindMatchedJobs() {
         JobSelectionState.clearSearchQuery();
         try {
-            SceneSwitcher.switchTo("getRecommendedJobs.fxml");
+            SceneSwitcher.switchTo("ProfileStep1.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

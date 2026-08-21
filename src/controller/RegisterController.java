@@ -155,7 +155,7 @@ public class RegisterController {
             showAlert(Alert.AlertType.INFORMATION, "Registration Successful!", "Your account has been created. Let's set up your profile.");
             
             try {
-                SceneSwitcher.switchTo("ProfileStep1.fxml");
+                SceneSwitcher.switchTo("LandingPage.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
