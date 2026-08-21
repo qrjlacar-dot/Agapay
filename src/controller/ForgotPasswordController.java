@@ -14,7 +14,7 @@ import services.AuthServices;
 
 public class ForgotPasswordController {
 
-    @FXML private TextField usernameField;
+    @FXML private TextField emailField;
     @FXML private PasswordField newPasswordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Label statusLabel;
@@ -23,11 +23,11 @@ public class ForgotPasswordController {
 
     @FXML
     private void handleResetPassword(ActionEvent event) {
-        String username = usernameField.getText();
+        String email = emailField.getText();
         String newPassword = newPasswordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
-        if (username.isBlank() || newPassword.isBlank() || confirmPassword.isBlank()) {
+        if (email.isBlank() || newPassword.isBlank() || confirmPassword.isBlank()) {
             setStatus("Please fill in all fields.", true);
             return;
         }
@@ -43,7 +43,7 @@ public class ForgotPasswordController {
         }
 
         // Fetch user from SQLite database
-        registrationModel user = authService.getUserByUsername(username);
+        registrationModel user = authService.getUserByEmail(emailField.getText());
 
         if (user != null) {
             // Apply password update via the model setter
@@ -62,7 +62,7 @@ public class ForgotPasswordController {
                 setStatus("Failed to update password in database.", true);
             }
         } else {
-            setStatus("Username not found.", true);
+            setStatus("Email not found.", true);
         }
     }
 

@@ -90,8 +90,8 @@ public class AuthServices {
         return userId;
     }
 
-    public registrationModel getUserByUsername(String name) {
-        String query = "SELECT name, government_id, role, password FROM userAccount WHERE name = ?";
+    public registrationModel getUserByEmail(String name) {
+        String query = "SELECT email, government_id, role, password FROM userAccount WHERE email = ?";
         Connection conn = dbManager.getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
