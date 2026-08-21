@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneSwitcher {
@@ -21,9 +20,8 @@ public class SceneSwitcher {
             Parent root = loader.load();
 
     
-            Scene scene = new Scene(root, 1200, 800); 
+        
             primaryStage.setTitle("Agapay");
-            primaryStage.setScene(scene);
             primaryStage.setResizable(true);
             primaryStage.show();
 
