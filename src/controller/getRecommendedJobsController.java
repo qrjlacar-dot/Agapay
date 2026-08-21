@@ -42,9 +42,11 @@ public class getRecommendedJobsController {
         } else {
             allJobs = recommendationService.getRecommendedJobsForUser(AuthServices.activeUserId);
         }
-
+        List<Job> matchedJobs = allJobs.stream()
+            .filter(job -> job.getMatchScore() > 0.0)
+            .toList();
         renderedJobs.clear();
-        renderedJobs.addAll(allJobs);
+        renderedJobs.addAll(matchedJobs);
         renderCards();
 
         System.out.println("View All Page: Loaded " + renderedJobs.size() + " jobs for display.");
@@ -69,71 +71,97 @@ public class getRecommendedJobsController {
     }
 
     private VBox createJobCard(Job job) {
-        VBox card = new VBox();
-        card.getStyleClass().add("job-card");
-        card.setSpacing(8);
-        card.setPrefWidth(320);
+    VBox card = new VBox();
+    card.getStyleClass().add("job-card");
+    card.setSpacing(10);
+    card.setPrefWidth(320);
 
-        Label badgeLabel = new Label(String.format("%.0f%% Match", job.getMatchScore()));
-        badgeLabel.getStyleClass().add("card-badge-label");
+    HBox topBadgeRow = new HBox();
+    topBadgeRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+    topBadgeRow.setSpacing(10);
 
-        HBox titleRow = new HBox();
-        titleRow.setSpacing(8);
-        titleRow.getStyleClass().add("card-title-row");
 
-        Label titleLabel = new Label(job.getTitle());
-        titleLabel.getStyleClass().add("card-job-title");
+    HBox matchBadgeContainer = new HBox();
+    matchBadgeContainer.getStyleClass().add("card-badge-container");
+    matchBadgeContainer.setAlignment(javafx.geometry.Pos.CENTER);
 
-        Label typeLabel = new Label("Recommended");
-        typeLabel.getStyleClass().add("badge-green-pill");
-        titleRow.getChildren().addAll(titleLabel, typeLabel);
+    Label matchIconLabel = new Label("★ ");
+    matchIconLabel.setStyle("-fx-text-fill: #000666; -fx-font-weight: bold;");
 
-        Label locationLabel = new Label(job.getEmployerName() + " • " + job.getLocation());
-        locationLabel.getStyleClass().add("card-location");
+    Label badgeLabel = new Label(String.format("%.0f%% Match", job.getMatchScore()));
+    badgeLabel.getStyleClass().add("badge-yellow-text");
+    badgeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 0.95em;");
 
-        Region spacerTop = new Region();
-        spacerTop.setPrefHeight(10);
+    matchBadgeContainer.getChildren().addAll(matchIconLabel, badgeLabel);
 
-        HBox payRow = new HBox();
-        payRow.setSpacing(8);
-        payRow.getStyleClass().add("card-info-row");
-        ImageView payIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/pesosign.png")));
-        payIcon.setFitWidth(16);
-        payIcon.setFitHeight(16);
-        Label payLabel = new Label(job.getPayInfo());
-        payLabel.getStyleClass().add("card-info-text");
-        payRow.getChildren().addAll(payIcon, payLabel);
+    // Optional: Dynamic Tag check for Volunteer or standard badge
+    boolean isVolunteer = (job.getPayInfo() != null && job.getPayInfo().toLowerCase().contains("volunteer")) 
+                       || (job.getTitle() != null && job.getTitle().toLowerCase().contains("volunteer"));
 
-        HBox scheduleRow = new HBox();
-        scheduleRow.setSpacing(8);
-        scheduleRow.getStyleClass().add("card-info-row");
-        ImageView clockIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/clock.png")));
-        clockIcon.setFitWidth(16);
-        clockIcon.setFitHeight(16);
-        Label scheduleLabel = new Label(job.getScheduleInfo());
-        scheduleLabel.getStyleClass().add("card-info-text");
-        scheduleRow.getChildren().addAll(clockIcon, scheduleLabel);
+    Label greenPill = new Label(isVolunteer ? "Volunteer" : "Recommended");
+    greenPill.getStyleClass().add("badge-green-pill");
 
-        Region grow = new Region();
-        VBox.setVgrow(grow, javafx.scene.layout.Priority.ALWAYS);
+    Region topSpacer = new Region();
+    HBox.setHgrow(topSpacer, javafx.scene.layout.Priority.ALWAYS);
 
-        Button actionButton = new Button("View & Apply");
-        actionButton.setMaxWidth(Double.MAX_VALUE);
-        actionButton.getStyleClass().add("card-action-btn");
-        actionButton.setOnAction(event -> openJobDetails(job));
+    topBadgeRow.getChildren().addAll(matchBadgeContainer, topSpacer, greenPill);
 
-        card.getChildren().addAll(
-            badgeLabel,
-            titleRow,
-            locationLabel,
-            spacerTop,
-            payRow,
-            scheduleRow,
-            grow,
-            actionButton
-        );
+    
+    Label titleLabel = new Label(job.getTitle());
+    titleLabel.getStyleClass().add("card-job-title");
+    titleLabel.setWrapText(true);
 
-        return card;
+    Label locationLabel = new Label(job.getEmployerName() + " • " + job.getLocation());
+    locationLabel.getStyleClass().add("card-location");
+    locationLabel.setWrapText(true);
+
+    
+    HBox payRow = new HBox();
+    payRow.setSpacing(8);
+    payRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+    payRow.getStyleClass().add("card-info-row");
+
+    ImageView payIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/pesosign.png")));
+    payIcon.setFitWidth(16);
+    payIcon.setFitHeight(16);
+
+    Label payLabel = new Label(job.getPayInfo() != null && !job.getPayInfo().isBlank() ? job.getPayInfo() : "Volunteer / To be Discussed");
+    payLabel.getStyleClass().add("card-info-text");
+    payRow.getChildren().addAll(payIcon, payLabel);
+
+    HBox scheduleRow = new HBox();
+    scheduleRow.setSpacing(8);
+    scheduleRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+    scheduleRow.getStyleClass().add("card-info-row");
+
+    ImageView clockIcon = new ImageView(new Image(getClass().getResourceAsStream("/Assets/Icons/clock.png")));
+    clockIcon.setFitWidth(16);
+    clockIcon.setFitHeight(16);
+
+    Label scheduleLabel = new Label(job.getScheduleInfo() != null && !job.getScheduleInfo().isBlank() ? job.getScheduleInfo() : "Flexible");
+    scheduleLabel.getStyleClass().add("card-info-text");
+    scheduleRow.getChildren().addAll(clockIcon, scheduleLabel);
+
+    // --- 4. FOOTER & ACTION BUTTON ---
+    Region grow = new Region();
+    VBox.setVgrow(grow, javafx.scene.layout.Priority.ALWAYS);
+
+    Button actionButton = new Button("View & Apply");
+    actionButton.setMaxWidth(Double.MAX_VALUE);
+    actionButton.getStyleClass().add("card-action-btn");
+    actionButton.setOnAction(event -> openJobDetails(job));
+
+    card.getChildren().addAll(
+        topBadgeRow,
+        titleLabel,
+        locationLabel,
+        payRow,
+        scheduleRow,
+        grow,
+        actionButton
+    );
+
+    return card;
     }
 
     @FXML

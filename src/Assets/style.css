@@ -851,3 +851,26 @@
     -fx-line-spacing: 3px;
     -fx-wrap-text: true;
 }
+
+.card-badge-container {
+    -fx-background-color: #F3AD34;
+    -fx-background-radius: 8px;
+    -fx-padding: 4px 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(243, 173, 52, 0.35), 6, 0, 0, 2);
+}
+
+.badge-yellow-text {
+    -fx-font-family: 'Atkinson Hyperlegible Next Bold', sans-serif;
+    -fx-font-size: 0.95em;
+    -fx-text-fill: #000666;
+}
+
+.badge-green-pill {
+    -fx-background-color: #83DF71;
+    -fx-text-fill: #000666;
+    -fx-font-family: 'Atkinson Hyperlegible Next Bold', sans-serif;
+    -fx-font-size: 0.8em;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12px;
+    -fx-padding: 4px 10px;
+}
