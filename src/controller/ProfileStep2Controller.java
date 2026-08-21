@@ -137,7 +137,7 @@ public class ProfileStep2Controller {
     @FXML
     private void handleCancel() {
         try {
-            SceneSwitcher.switchTo("LandingPage.fxml");
+            SceneSwitcher.switchTo("getRecommendedJobs.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
