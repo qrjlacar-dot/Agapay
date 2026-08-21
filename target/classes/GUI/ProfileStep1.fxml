@@ -29,7 +29,6 @@
 
     <stylesheets>
         <URL value="@../Assets/style.css" />
-        <URL value="@../Assets/profile.css" />
     </stylesheets>
 
     <top>

@@ -21,7 +21,7 @@ public class SceneSwitcher {
             Parent root = loader.load();
 
     
-            Scene scene = new Scene(root, 1280, 720); 
+            Scene scene = new Scene(root, 1920, 1080); 
             primaryStage.setTitle("Agapay");
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);

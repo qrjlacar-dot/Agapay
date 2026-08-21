@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="rootStackPane" stylesheets="@../Assets/applynow.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplyNowController">
+<StackPane fx:id="rootStackPane" stylesheets="@../Assets/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ApplyNowController">
 
     <!-- MAIN PAGE CONTENT (Wrapped in BorderPane) -->
     <BorderPane fx:id="rootPane" prefHeight="720" prefWidth="1280" styleClass="root-pane">

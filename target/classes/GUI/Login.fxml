@@ -20,7 +20,6 @@
     <!-- Attach external stylesheets for UI styling -->
     <stylesheets>
         <URL value="@../Assets/style.css" />
-        <URL value="@../Assets/login.css" />
     </stylesheets>
 
     <!-- Top navigation bar -->
